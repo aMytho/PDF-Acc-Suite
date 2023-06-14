@@ -35,5 +35,11 @@ namespace PDF_Acc_ToolSet.Tools
                 handler(this, new TableGeneration(rowCount, columnCount));
             }
         }
+
+        private void ResetBtn_Click(object sender, EventArgs e)
+        {
+            TableColumnAmountNumeric.Value = 0;
+            TableRowAmountNumeric.Value = 0;
+        }
     }
 }

@@ -37,7 +37,7 @@
             label1 = new Label();
             ListItemAmountNumeric = new NumericUpDown();
             GenerateBtn = new Button();
-            button2 = new Button();
+            ResetBtn = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ListItemAmountNumeric).BeginInit();
             SuspendLayout();
@@ -128,21 +128,22 @@
             GenerateBtn.UseVisualStyleBackColor = true;
             GenerateBtn.Click += GenerateBtn_Click;
             // 
-            // button2
+            // ResetBtn
             // 
-            button2.Location = new Point(136, 325);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 2;
-            button2.Text = "Reset";
-            button2.UseVisualStyleBackColor = true;
+            ResetBtn.Location = new Point(215, 325);
+            ResetBtn.Name = "ResetBtn";
+            ResetBtn.Size = new Size(75, 23);
+            ResetBtn.TabIndex = 2;
+            ResetBtn.Text = "Reset";
+            ResetBtn.UseVisualStyleBackColor = true;
+            ResetBtn.Click += ResetBtn_Click;
             // 
             // ListGenerator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(340, 372);
-            Controls.Add(button2);
+            Controls.Add(ResetBtn);
             Controls.Add(GenerateBtn);
             Controls.Add(groupBox1);
             Name = "ListGenerator";
@@ -157,7 +158,7 @@
 
         private GroupBox groupBox1;
         private Button GenerateBtn;
-        private Button button2;
+        private Button ResetBtn;
         private Label label1;
         private NumericUpDown ListItemAmountNumeric;
         private CheckBox ListLabelCheckbox;

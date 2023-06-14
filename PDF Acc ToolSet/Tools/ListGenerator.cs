@@ -25,5 +25,11 @@
                 handler(this, new ListGeneration(amountOfLists, addLabels));
             }
         }
+
+        private void ResetBtn_Click(object sender, EventArgs e)
+        {
+            ListItemAmountNumeric.Value = 0;
+            ListLabelCheckbox.Checked = false;
+        }
     }
 }

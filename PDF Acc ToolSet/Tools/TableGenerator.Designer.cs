@@ -35,7 +35,7 @@
             label1 = new Label();
             TableColumnAmountNumeric = new NumericUpDown();
             GenerateBtn = new Button();
-            button2 = new Button();
+            ResetBtn = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TableRowAmountNumeric).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TableColumnAmountNumeric).BeginInit();
@@ -105,21 +105,22 @@
             GenerateBtn.UseVisualStyleBackColor = true;
             GenerateBtn.Click += GenerateBtn_Click;
             // 
-            // button2
+            // ResetBtn
             // 
-            button2.Location = new Point(169, 239);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 2;
-            button2.Text = "Reset";
-            button2.UseVisualStyleBackColor = true;
+            ResetBtn.Location = new Point(169, 239);
+            ResetBtn.Name = "ResetBtn";
+            ResetBtn.Size = new Size(75, 23);
+            ResetBtn.TabIndex = 2;
+            ResetBtn.Text = "Reset";
+            ResetBtn.UseVisualStyleBackColor = true;
+            ResetBtn.Click += ResetBtn_Click;
             // 
             // TableGenerator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(317, 285);
-            Controls.Add(button2);
+            Controls.Add(ResetBtn);
             Controls.Add(GenerateBtn);
             Controls.Add(groupBox1);
             Name = "TableGenerator";
@@ -140,6 +141,6 @@
         private Label label2;
         private Label label1;
         private Button GenerateBtn;
-        private Button button2;
+        private Button ResetBtn;
     }
 }

@@ -101,21 +101,59 @@ namespace PDF_Acc_ToolSet
             MessageBox.Show("Done!");
         }
 
+        public void CreateTable(TableGeneration table)
+        {
+            // Get the tag pointer. It starts at the root of the tag tree.
+            TagTreePointer tags = document.GetPdfDocument().GetTagStructureContext().GetAutoTaggingPointer();
+            // Add the parent table element to the beginning of the tag tree
+            tags.AddTag(0, "Table");
+
+            // For each row to be generated, add the required columns
+            for (int i = 0; i < table.rowCount; i++)
+            {
+                // Add the table row
+                tags.AddTag("TR");
+                // Adds the table column cells
+                for (int j = 0; j < table.columnCount; j++)
+                {
+                    // If this is the first row, add header cells
+                    if (i == 0)
+                    {
+                        tags.AddTag("TH");
+                    } else
+                    {
+                        // Its not a header row, so we add normal table cells
+                        tags.AddTag("TD");
+                    }
+
+                    // Return to the parent row for the next iteration (add more columns)
+                    tags.MoveToParent();
+                }
+
+                // Return to the parent table element for the next iteration (add more rows)
+                tags.MoveToParent();
+            }
+
+            // Save changes
+            document.Close();
+            MessageBox.Show("Done!");
+        }
+
         private void TblGenBtn_Click(object sender, EventArgs e)
         {
             // Only load if document uploaded
             if (!documentSelected) return;
 
             // Load the new form
-            ListGenerator newForm = new ListGenerator();
+            TableGenerator newForm = new TableGenerator();
             // Listen for the selection
-            newForm.ListGenerationCompleted += (sender, e) =>
+            newForm.TableGeneratorChanged += (sender, e) =>
             {
                 // Selection completed, close form
                 newForm.Close();
 
-                // Create the list
-                CreateList(e);
+                // Create the table
+                CreateTable(e);
             };
             // Show the form
             newForm.ShowDialog();

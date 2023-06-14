@@ -32,8 +32,12 @@
             label2 = new Label();
             FileUpload = new Button();
             ToolGroupBox = new GroupBox();
-            ListGenBtn = new Button();
             TblGenBtn = new Button();
+            ListGenBtn = new Button();
+            FileUploadDialogue = new OpenFileDialog();
+            SuccessLbl = new Label();
+            SaveBtn = new Button();
+            CancelBtn = new Button();
             ToolGroupBox.SuspendLayout();
             SuspendLayout();
             // 
@@ -64,6 +68,7 @@
             FileUpload.TabIndex = 3;
             FileUpload.Text = "Upload";
             FileUpload.UseVisualStyleBackColor = true;
+            FileUpload.Click += FileUpload_Click;
             FileUpload.DragDrop += FileUpload_DragDrop;
             FileUpload.DragOver += FileUpload_DragOver;
             // 
@@ -71,12 +76,23 @@
             // 
             ToolGroupBox.Controls.Add(TblGenBtn);
             ToolGroupBox.Controls.Add(ListGenBtn);
-            ToolGroupBox.Location = new Point(28, 181);
+            ToolGroupBox.Enabled = false;
+            ToolGroupBox.Location = new Point(26, 197);
             ToolGroupBox.Name = "ToolGroupBox";
-            ToolGroupBox.Size = new Size(200, 243);
+            ToolGroupBox.Size = new Size(200, 209);
             ToolGroupBox.TabIndex = 4;
             ToolGroupBox.TabStop = false;
             ToolGroupBox.Text = "Tools";
+            // 
+            // TblGenBtn
+            // 
+            TblGenBtn.Location = new Point(51, 64);
+            TblGenBtn.Name = "TblGenBtn";
+            TblGenBtn.Size = new Size(99, 23);
+            TblGenBtn.TabIndex = 1;
+            TblGenBtn.Text = "Table Generator";
+            TblGenBtn.UseVisualStyleBackColor = true;
+            TblGenBtn.Click += TblGenBtn_Click;
             // 
             // ListGenBtn
             // 
@@ -89,22 +105,55 @@
             ListGenBtn.UseVisualStyleBackColor = true;
             ListGenBtn.Click += ListGenBtn_Click;
             // 
-            // TblGenBtn
+            // FileUploadDialogue
             // 
-            TblGenBtn.Location = new Point(51, 64);
-            TblGenBtn.Name = "TblGenBtn";
-            TblGenBtn.Size = new Size(99, 23);
-            TblGenBtn.TabIndex = 1;
-            TblGenBtn.Text = "Table Generator";
-            TblGenBtn.UseVisualStyleBackColor = true;
-            TblGenBtn.Click += TblGenBtn_Click;
+            FileUploadDialogue.DefaultExt = "pdf";
+            FileUploadDialogue.ShowReadOnly = true;
+            FileUploadDialogue.SupportMultiDottedExtensions = true;
+            FileUploadDialogue.Title = "File Upload";
+            // 
+            // SuccessLbl
+            // 
+            SuccessLbl.AutoSize = true;
+            SuccessLbl.ForeColor = Color.DarkGreen;
+            SuccessLbl.Location = new Point(53, 175);
+            SuccessLbl.Name = "SuccessLbl";
+            SuccessLbl.Size = new Size(149, 15);
+            SuccessLbl.TabIndex = 2;
+            SuccessLbl.Text = "File Uploaded Successfully!";
+            SuccessLbl.Visible = false;
+            // 
+            // SaveBtn
+            // 
+            SaveBtn.Enabled = false;
+            SaveBtn.Location = new Point(37, 427);
+            SaveBtn.Name = "SaveBtn";
+            SaveBtn.Size = new Size(75, 23);
+            SaveBtn.TabIndex = 5;
+            SaveBtn.Text = "Save";
+            SaveBtn.UseVisualStyleBackColor = true;
+            SaveBtn.Click += SaveBtn_Click;
+            // 
+            // CancelBtn
+            // 
+            CancelBtn.Enabled = false;
+            CancelBtn.Location = new Point(134, 427);
+            CancelBtn.Name = "CancelBtn";
+            CancelBtn.Size = new Size(75, 23);
+            CancelBtn.TabIndex = 6;
+            CancelBtn.Text = "Cancel";
+            CancelBtn.UseVisualStyleBackColor = true;
+            CancelBtn.Click += CancelBtn_Click;
             // 
             // Form1
             // 
             AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(258, 450);
+            ClientSize = new Size(258, 470);
+            Controls.Add(CancelBtn);
+            Controls.Add(SaveBtn);
+            Controls.Add(SuccessLbl);
             Controls.Add(ToolGroupBox);
             Controls.Add(FileUpload);
             Controls.Add(label2);
@@ -125,5 +174,9 @@
         private GroupBox ToolGroupBox;
         private Button ListGenBtn;
         private Button TblGenBtn;
+        private OpenFileDialog FileUploadDialogue;
+        private Label SuccessLbl;
+        private Button SaveBtn;
+        private Button CancelBtn;
     }
 }

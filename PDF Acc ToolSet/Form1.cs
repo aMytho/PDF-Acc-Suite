@@ -19,26 +19,47 @@ namespace PDF_Acc_ToolSet
         public void SetPDF(string path)
         {
             //Set up PDF Settings, load input/output files
-            PdfReader reader = new PdfReader(path);
-            PdfWriter writer = new PdfWriter("./new.pdf");
-            PdfDocument pdf = new PdfDocument(reader, writer);
+            try
+            {
+                PdfReader reader = new PdfReader(path);
+                PdfWriter writer = new PdfWriter("./new.pdf");
+                PdfDocument pdf = new PdfDocument(reader, writer);
 
-            // Enable tags! Must have for acc operations.
-            pdf.SetTagged();
+                // Enable tags! Must have for acc operations.
+                pdf.SetTagged();
 
-            // Load the document for editing
-            document = new iText.Layout.Document(pdf);
-            documentSelected = true;
+                // Load the document for editing
+                document = new iText.Layout.Document(pdf);
+                documentSelected = true;
+
+                // Enable tool selection
+                ToolGroupBox.Enabled = true;
+
+                // Notify the user that everything worked
+                SuccessLbl.Visible = true;
+
+                // Enable saving/cancel
+                SaveBtn.Enabled = true;
+                CancelBtn.Enabled = true;
+            }
+            catch
+            {
+                MessageBox.Show("There was an error reading the PDF. Check for file corruption and ensure that you have write access.", "Upload Error");
+            }
         }
 
         private void FileUpload_DragDrop(object sender, DragEventArgs e)
         {
-            // Usr uploaded a file! Make sure it is valid
-            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[]; // get all files droppeds  
-            if (files != null && files.Any())
+            // User uploaded a file! Make sure it is valid
+            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+            if (files != null && files.Any() && files.First().EndsWith(".pdf"))
             {
-                MessageBox.Show(files.First().ToString());
+                // Load the PDf
                 SetPDF(files.First().ToString());
+            }
+            else
+            {
+                MessageBox.Show("Invalid file. Upload one file at a time. File must be a PDF");
             }
         }
 
@@ -96,15 +117,16 @@ namespace PDF_Acc_ToolSet
                 tags.MoveToParent().MoveToParent();
             }
 
-            // Save changes
-            document.Close();
-            MessageBox.Show("Done!");
+            // Complete, move back to root
+            tags.MoveToRoot();
+            MessageBox.Show("Generated List!");
         }
 
         public void CreateTable(TableGeneration table)
         {
             // Get the tag pointer. It starts at the root of the tag tree.
             TagTreePointer tags = document.GetPdfDocument().GetTagStructureContext().GetAutoTaggingPointer();
+            
             // Add the parent table element to the beginning of the tag tree
             tags.AddTag(0, "Table");
 
@@ -120,7 +142,8 @@ namespace PDF_Acc_ToolSet
                     if (i == 0)
                     {
                         tags.AddTag("TH");
-                    } else
+                    }
+                    else
                     {
                         // Its not a header row, so we add normal table cells
                         tags.AddTag("TD");
@@ -134,9 +157,9 @@ namespace PDF_Acc_ToolSet
                 tags.MoveToParent();
             }
 
-            // Save changes
-            document.Close();
-            MessageBox.Show("Done!");
+            // Complete. Move back to root in case of other operations
+            tags.MoveToRoot();
+            MessageBox.Show("Generated Table!");
         }
 
         private void TblGenBtn_Click(object sender, EventArgs e)
@@ -157,6 +180,50 @@ namespace PDF_Acc_ToolSet
             };
             // Show the form
             newForm.ShowDialog();
+        }
+
+        private void FileUpload_Click(object sender, EventArgs e)
+        {
+            // This method is only ran if the upload btn is clicked, not file drag/drop
+
+            // Show the file upload
+            DialogResult result = FileUploadDialogue.ShowDialog(this);
+            // Ensure that a file was selected, and that the file is a valid PDF.
+            if (result == DialogResult.Cancel)
+            {
+                MessageBox.Show("No file selected.");
+            } else if (result == DialogResult.OK && FileUploadDialogue.FileName.EndsWith(".pdf"))
+            {
+                // Load the PDf
+                SetPDF(FileUploadDialogue.FileName);
+            } else
+            {
+                MessageBox.Show("Invalid file. Upload one file at a time. File must be a PDF");
+            }
+        }
+
+        private void SaveBtn_Click(object sender, EventArgs e)
+        {
+            document.Close();
+            MessageBox.Show("Changes Saved!");
+            // Restart the app to remove changes
+            Application.Restart();
+            // Remove any event handelers
+            Environment.Exit(0);
+        }
+
+        private void CancelBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure? All changes will be removed.", "Remove Pending Changes", MessageBoxButtons.YesNo
+                );
+            if (result == DialogResult.Yes)
+            {
+                // Restart the app to remove changes
+                Application.Restart();
+                // Remove any event handelers
+                Environment.Exit(0);
+            }
         }
     }
 }

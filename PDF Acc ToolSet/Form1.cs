@@ -12,6 +12,8 @@ namespace PDF_Acc_ToolSet
     {
         private iText.Layout.Document document;
         private bool documentSelected = false;
+        private string uploadPath;
+
         public Form1()
         {
             // Load form
@@ -28,7 +30,18 @@ namespace PDF_Acc_ToolSet
                 WriterProperties properties = new WriterProperties();
                 properties.AddUAXmpMetadata();
 
-                PdfWriter writer = new PdfWriter("./new.pdf", properties);
+                // Get the export target from the user
+                if (!SetOutput())
+                {
+                    // Something went wrong. Reset input/output to avoid possible confusion
+                    FileSaveDialogue.FileName = null;
+                    FileUploadDialogue.FileName = null;
+                    uploadPath = "";
+                    return;
+                }
+
+                // Load the PDF writer and document
+                PdfWriter writer = new PdfWriter(FileSaveDialogue.FileName, properties);
                 PdfDocument pdf = new PdfDocument(reader, writer);
 
                 // Enable tags! Must have for acc operations.
@@ -47,7 +60,7 @@ namespace PDF_Acc_ToolSet
                 // Notify the user that everything worked
                 SuccessLbl.Visible = true;
 
-                // Enable saving/cancel
+                // Enable the save and cancel button
                 SaveBtn.Enabled = true;
                 CancelBtn.Enabled = true;
             }
@@ -64,7 +77,8 @@ namespace PDF_Acc_ToolSet
             if (files != null && files.Any() && files.First().EndsWith(".pdf"))
             {
                 // Load the PDf
-                SetPDF(files.First().ToString());
+                uploadPath = files.First();
+                SetPDF(files.First());
             }
             else
             {
@@ -205,6 +219,7 @@ namespace PDF_Acc_ToolSet
             else if (result == DialogResult.OK && FileUploadDialogue.FileName.EndsWith(".pdf"))
             {
                 // Load the PDf
+                uploadPath = FileUploadDialogue.FileName;
                 SetPDF(FileUploadDialogue.FileName);
             }
             else
@@ -230,6 +245,9 @@ namespace PDF_Acc_ToolSet
                 );
             if (result == DialogResult.Yes)
             {
+                // Delete the newly created file. It has no data, and the input is still available.
+                document.Close();
+                File.Delete(FileSaveDialogue.FileName);
                 // Restart the app to remove changes
                 Application.Restart();
                 // Remove any event handelers
@@ -237,9 +255,62 @@ namespace PDF_Acc_ToolSet
             }
         }
 
-        private void TagCounterBtn_Click(object sender, EventArgs e)
+        private bool SetOutput()
         {
-            
+            // Sets the output PDF
+            DialogResult result = FileSaveDialogue.ShowDialog(this);
+            if (result == DialogResult.Cancel)
+            {
+                MessageBox.Show("No file selected.", "Export Not Set");
+                return false;
+            }
+            else if (FileSaveDialogue.FileName == uploadPath)
+            {
+                MessageBox.Show("You cannot have the export file be the same as the input file.", "Export Not Set");
+                return false;
+            }
+            else if (result == DialogResult.OK && FileSaveDialogue.FileName.EndsWith(".pdf"))
+            {
+                // If the file doesn't exist, return the output.
+                if (File.Exists(FileSaveDialogue.FileName))
+                {
+                    MessageBox.Show("You cannot overwrite an existing PDF!", "Export Not Set");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                // Some other error
+                MessageBox.Show("Error during export selection.", "Export Not Set");
+                return false;
+            }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Run the related shortcut
+            switch (e.KeyCode)
+            {
+                case Keys.U:
+                    FileUpload.PerformClick();
+                    break;
+                case Keys.L:
+                    ListGenBtn.PerformClick();
+                    break;
+                case Keys.T:
+                    TblGenBtn.PerformClick();
+                    break;
+                case Keys.S:
+                    SaveBtn.PerformClick();
+                    break;
+                case Keys.C:
+                    CancelBtn.PerformClick();
+                    break;
+            }
         }
     }
 }

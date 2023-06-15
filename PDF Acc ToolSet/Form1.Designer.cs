@@ -32,13 +32,13 @@
             label2 = new Label();
             FileUpload = new Button();
             ToolGroupBox = new GroupBox();
-            TagCounterBtn = new Button();
             TblGenBtn = new Button();
             ListGenBtn = new Button();
             FileUploadDialogue = new OpenFileDialog();
             SuccessLbl = new Label();
             SaveBtn = new Button();
             CancelBtn = new Button();
+            FileSaveDialogue = new SaveFileDialog();
             ToolGroupBox.SuspendLayout();
             SuspendLayout();
             // 
@@ -75,7 +75,6 @@
             // 
             // ToolGroupBox
             // 
-            ToolGroupBox.Controls.Add(TagCounterBtn);
             ToolGroupBox.Controls.Add(TblGenBtn);
             ToolGroupBox.Controls.Add(ListGenBtn);
             ToolGroupBox.Enabled = false;
@@ -85,16 +84,6 @@
             ToolGroupBox.TabIndex = 4;
             ToolGroupBox.TabStop = false;
             ToolGroupBox.Text = "Tools";
-            // 
-            // TagCounterBtn
-            // 
-            TagCounterBtn.Location = new Point(56, 105);
-            TagCounterBtn.Name = "TagCounterBtn";
-            TagCounterBtn.Size = new Size(86, 23);
-            TagCounterBtn.TabIndex = 2;
-            TagCounterBtn.Text = "Tag Counter";
-            TagCounterBtn.UseVisualStyleBackColor = true;
-            TagCounterBtn.Click += TagCounterBtn_Click;
             // 
             // TblGenBtn
             // 
@@ -120,6 +109,7 @@
             // FileUploadDialogue
             // 
             FileUploadDialogue.DefaultExt = "pdf";
+            FileUploadDialogue.Filter = "PDF Files|*.pdf";
             FileUploadDialogue.ShowReadOnly = true;
             FileUploadDialogue.SupportMultiDottedExtensions = true;
             FileUploadDialogue.Title = "File Upload";
@@ -157,6 +147,13 @@
             CancelBtn.UseVisualStyleBackColor = true;
             CancelBtn.Click += CancelBtn_Click;
             // 
+            // FileSaveDialogue
+            // 
+            FileSaveDialogue.DefaultExt = "pdf";
+            FileSaveDialogue.Filter = "PDF Files|*.pdf";
+            FileSaveDialogue.SupportMultiDottedExtensions = true;
+            FileSaveDialogue.Title = "Export PDF";
+            // 
             // Form1
             // 
             AllowDrop = true;
@@ -170,8 +167,10 @@
             Controls.Add(FileUpload);
             Controls.Add(label2);
             Controls.Add(label1);
+            KeyPreview = true;
             Name = "Form1";
             Text = "PDF LifeSaver";
+            KeyDown += Form1_KeyDown;
             ToolGroupBox.ResumeLayout(false);
             ToolGroupBox.PerformLayout();
             ResumeLayout(false);
@@ -190,6 +189,6 @@
         private Label SuccessLbl;
         private Button SaveBtn;
         private Button CancelBtn;
-        private Button TagCounterBtn;
+        private SaveFileDialog FileSaveDialogue;
     }
 }

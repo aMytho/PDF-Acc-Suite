@@ -32,6 +32,7 @@
             label2 = new Label();
             FileUpload = new Button();
             ToolGroupBox = new GroupBox();
+            TagCounterBtn = new Button();
             TblGenBtn = new Button();
             ListGenBtn = new Button();
             FileUploadDialogue = new OpenFileDialog();
@@ -74,6 +75,7 @@
             // 
             // ToolGroupBox
             // 
+            ToolGroupBox.Controls.Add(TagCounterBtn);
             ToolGroupBox.Controls.Add(TblGenBtn);
             ToolGroupBox.Controls.Add(ListGenBtn);
             ToolGroupBox.Enabled = false;
@@ -83,6 +85,16 @@
             ToolGroupBox.TabIndex = 4;
             ToolGroupBox.TabStop = false;
             ToolGroupBox.Text = "Tools";
+            // 
+            // TagCounterBtn
+            // 
+            TagCounterBtn.Location = new Point(56, 105);
+            TagCounterBtn.Name = "TagCounterBtn";
+            TagCounterBtn.Size = new Size(86, 23);
+            TagCounterBtn.TabIndex = 2;
+            TagCounterBtn.Text = "Tag Counter";
+            TagCounterBtn.UseVisualStyleBackColor = true;
+            TagCounterBtn.Click += TagCounterBtn_Click;
             // 
             // TblGenBtn
             // 
@@ -178,5 +190,6 @@
         private Label SuccessLbl;
         private Button SaveBtn;
         private Button CancelBtn;
+        private Button TagCounterBtn;
     }
 }

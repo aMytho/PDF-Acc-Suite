@@ -18,7 +18,6 @@ namespace PDF_Acc_ToolSet.Utils
         public static List<IStructureNode> GetTagsByType(TagType tagType, TagTreePointer pointer)
         {
             string tagToFind = GetTagByEnum(tagType);
-            pointer.GetKidsRoles();
             
             // Create a copy of the current tag
             PdfStructElem currentTag = pointer.GetContext().GetPointerStructElem(pointer);

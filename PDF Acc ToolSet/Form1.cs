@@ -1,8 +1,10 @@
 using System;
 using System.IO;
 using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Tagging;
 using iText.Kernel.Pdf.Tagutils;
 using PDF_Acc_ToolSet.Tools;
+using PDF_Acc_ToolSet.Utils;
 
 namespace PDF_Acc_ToolSet
 {
@@ -22,7 +24,11 @@ namespace PDF_Acc_ToolSet
             try
             {
                 PdfReader reader = new PdfReader(path);
-                PdfWriter writer = new PdfWriter("./new.pdf");
+                // Set the PDF to the UA standard. Sets the standard, doesn't actually do anything else. Still needs manual check
+                WriterProperties properties = new WriterProperties();
+                properties.AddUAXmpMetadata();
+
+                PdfWriter writer = new PdfWriter("./new.pdf", properties);
                 PdfDocument pdf = new PdfDocument(reader, writer);
 
                 // Enable tags! Must have for acc operations.
@@ -31,6 +37,9 @@ namespace PDF_Acc_ToolSet
                 // Load the document for editing
                 document = new iText.Layout.Document(pdf);
                 documentSelected = true;
+
+                // Set the PDF info in util
+                TagUtil.setRoleMap(document.GetPdfDocument().GetStructTreeRoot().GetRoleMap());
 
                 // Enable tool selection
                 ToolGroupBox.Enabled = true;
@@ -126,7 +135,7 @@ namespace PDF_Acc_ToolSet
         {
             // Get the tag pointer. It starts at the root of the tag tree.
             TagTreePointer tags = document.GetPdfDocument().GetTagStructureContext().GetAutoTaggingPointer();
-            
+
             // Add the parent table element to the beginning of the tag tree
             tags.AddTag(0, "Table");
 
@@ -192,11 +201,13 @@ namespace PDF_Acc_ToolSet
             if (result == DialogResult.Cancel)
             {
                 MessageBox.Show("No file selected.");
-            } else if (result == DialogResult.OK && FileUploadDialogue.FileName.EndsWith(".pdf"))
+            }
+            else if (result == DialogResult.OK && FileUploadDialogue.FileName.EndsWith(".pdf"))
             {
                 // Load the PDf
                 SetPDF(FileUploadDialogue.FileName);
-            } else
+            }
+            else
             {
                 MessageBox.Show("Invalid file. Upload one file at a time. File must be a PDF");
             }
@@ -224,6 +235,11 @@ namespace PDF_Acc_ToolSet
                 // Remove any event handelers
                 Environment.Exit(0);
             }
+        }
+
+        private void TagCounterBtn_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

@@ -39,7 +39,27 @@ namespace PDF_Acc_ToolSet.Tools
         private void ResetBtn_Click(object sender, EventArgs e)
         {
             TableColumnAmountNumeric.Value = 0;
-            TableRowAmountNumeric.Value = 0;
+            TableRowAmountNumeric.Value = 1;
+        }
+
+        private void TableGenerator_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Run the related shortcut
+            switch (e.KeyCode)
+            {
+                case Keys.C:
+                    TableColumnAmountNumeric.Focus();
+                    break;
+                case Keys.R:
+                    TableRowAmountNumeric.Focus();
+                    break;
+                case Keys.Escape:
+                    Close();
+                    break;
+                case Keys.G:
+                    GenerateBtn.PerformClick();
+                    break;
+            }
         }
     }
 }

@@ -67,9 +67,12 @@
             // TableRowAmountNumeric
             // 
             TableRowAmountNumeric.Location = new Point(127, 73);
+            TableRowAmountNumeric.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            TableRowAmountNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             TableRowAmountNumeric.Name = "TableRowAmountNumeric";
             TableRowAmountNumeric.Size = new Size(120, 23);
             TableRowAmountNumeric.TabIndex = 2;
+            TableRowAmountNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label2
             // 
@@ -91,6 +94,7 @@
             // TableColumnAmountNumeric
             // 
             TableColumnAmountNumeric.Location = new Point(127, 32);
+            TableColumnAmountNumeric.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
             TableColumnAmountNumeric.Name = "TableColumnAmountNumeric";
             TableColumnAmountNumeric.Size = new Size(120, 23);
             TableColumnAmountNumeric.TabIndex = 0;
@@ -123,8 +127,10 @@
             Controls.Add(ResetBtn);
             Controls.Add(GenerateBtn);
             Controls.Add(groupBox1);
+            KeyPreview = true;
             Name = "TableGenerator";
             Text = "TableGenerator";
+            KeyDown += TableGenerator_KeyDown;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)TableRowAmountNumeric).EndInit();

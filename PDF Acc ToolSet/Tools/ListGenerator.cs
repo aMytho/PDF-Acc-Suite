@@ -28,8 +28,28 @@
 
         private void ResetBtn_Click(object sender, EventArgs e)
         {
-            ListItemAmountNumeric.Value = 0;
+            ListItemAmountNumeric.Value = 1;
             ListLabelCheckbox.Checked = false;
+        }
+
+        private void ListGenerator_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Run the related shortcut
+            switch (e.KeyCode)
+            {
+                case Keys.N:
+                    ListItemAmountNumeric.Focus();
+                    break;
+                case Keys.L:
+                    ListLabelCheckbox.Checked = !ListLabelCheckbox.Checked;
+                    break;
+                case Keys.G:
+                    GenerateBtn.PerformClick();
+                    break;
+                case Keys.Escape:
+                    Close();
+                    break;
+            }
         }
     }
 }

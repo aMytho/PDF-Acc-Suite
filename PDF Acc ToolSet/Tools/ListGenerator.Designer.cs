@@ -114,9 +114,11 @@
             // ListItemAmountNumeric
             // 
             ListItemAmountNumeric.Location = new Point(146, 36);
+            ListItemAmountNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             ListItemAmountNumeric.Name = "ListItemAmountNumeric";
             ListItemAmountNumeric.Size = new Size(120, 23);
             ListItemAmountNumeric.TabIndex = 0;
+            ListItemAmountNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // GenerateBtn
             // 
@@ -146,8 +148,10 @@
             Controls.Add(ResetBtn);
             Controls.Add(GenerateBtn);
             Controls.Add(groupBox1);
+            KeyPreview = true;
             Name = "ListGenerator";
             Text = "ListGenerator";
+            KeyDown += ListGenerator_KeyDown;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ListItemAmountNumeric).EndInit();

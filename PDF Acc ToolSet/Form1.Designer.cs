@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             label1 = new Label();
             label2 = new Label();
             FileUpload = new Button();
@@ -167,9 +168,10 @@
             Controls.Add(FileUpload);
             Controls.Add(label2);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Name = "Form1";
-            Text = "PDF LifeSaver";
+            Text = "PDF Accessibility";
             KeyDown += Form1_KeyDown;
             ToolGroupBox.ResumeLayout(false);
             ToolGroupBox.PerformLayout();

@@ -1,7 +1,6 @@
 using System;
-using System.IO;
+using System.Diagnostics;
 using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Tagging;
 using iText.Kernel.Pdf.Tagutils;
 using PDF_Acc_ToolSet.Tools;
 using PDF_Acc_ToolSet.Utils;
@@ -232,6 +231,21 @@ namespace PDF_Acc_ToolSet
         {
             document.Close();
             MessageBox.Show("Changes Saved!");
+
+            // Try to open the PDF in the users default app. Explorer handles that operation.
+            // This is pretty neat, no need to access the registry!
+            try
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = "explorer";
+                process.StartInfo.Arguments = "\"" + FileSaveDialogue.FileName + "\"";
+                process.Start();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Unable to open the PDF using the default app.");
+            }
+
             // Restart the app to remove changes
             Application.Restart();
             // Remove any event handelers
@@ -311,6 +325,12 @@ namespace PDF_Acc_ToolSet
                     CancelBtn.PerformClick();
                     break;
             }
+        }
+
+        private void DocumentInfoBtn_Click(object sender, EventArgs e)
+        {
+            // Load document info form
+
         }
     }
 }

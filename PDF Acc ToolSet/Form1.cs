@@ -19,15 +19,29 @@ namespace PDF_Acc_ToolSet
             InitializeComponent();
         }
 
-        public void SetPDF(string path)
+        public async void SetPDF(string path)
         {
             //Set up PDF Settings, load input/output files
             try
             {
-                PdfReader reader = new PdfReader(path);
-                // Set the PDF to the UA standard. Sets the standard, doesn't actually do anything else. Still needs manual check
-                WriterProperties properties = new WriterProperties();
-                properties.AddUAXmpMetadata();
+                // Import the reader (input) file
+                ImportOperation<PdfReader> reader = PdfImporter.OpenInput(path);
+                if (!reader.success)
+                {
+                    MessageBox.Show("Error reading the input file. Check for password protection and ensure you have write access",
+                        "Upload Error");
+                    return;
+                }
+
+                // Create the writer config
+
+                ImportOperation<WriterWithMetadata> writerProperties = await PdfImporter.SetOutputMetadata(reader.Data);
+                if (!writerProperties.success)
+                {
+                    MessageBox.Show("Error setting output metadata. Check that the input file is not password protected.", "Upload Error");
+                    return;
+                }
+
 
                 // Get the export target from the user
                 if (!SetOutput())
@@ -40,8 +54,13 @@ namespace PDF_Acc_ToolSet
                 }
 
                 // Load the PDF writer and document
-                PdfWriter writer = new PdfWriter(FileSaveDialogue.FileName, properties);
-                PdfDocument pdf = new PdfDocument(reader, writer);
+                PdfWriter writer = new(FileSaveDialogue.FileName, writerProperties.Data.writer);
+                PdfDocument pdf = new(new PdfReader(path), writer);
+
+                // Set lang and title
+                pdf.GetCatalog().SetLang(new PdfString(writerProperties.Data.meta.Language));
+                pdf.GetCatalog().SetViewerPreferences(new PdfViewerPreferences().SetDisplayDocTitle(true));
+                pdf.GetDocumentInfo().SetTitle(writerProperties.Data.meta.Title);
 
                 // Enable tags! Must have for acc operations.
                 pdf.SetTagged();
@@ -65,7 +84,8 @@ namespace PDF_Acc_ToolSet
             }
             catch
             {
-                MessageBox.Show("There was an error reading the PDF. Check for file corruption and ensure that you have write access.", "Upload Error");
+                MessageBox.Show("There was an error reading the PDF. Check for file corruption and ensure that you have write access.",
+                    "Upload Error");
             }
         }
 
@@ -325,12 +345,6 @@ namespace PDF_Acc_ToolSet
                     CancelBtn.PerformClick();
                     break;
             }
-        }
-
-        private void DocumentInfoBtn_Click(object sender, EventArgs e)
-        {
-            // Load document info form
-
         }
     }
 }

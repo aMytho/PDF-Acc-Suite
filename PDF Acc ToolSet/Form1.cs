@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Tagutils;
+using iText.Layout;
 using PDF_Acc_ToolSet.Tools;
 using PDF_Acc_ToolSet.Utils;
 
@@ -9,7 +10,7 @@ namespace PDF_Acc_ToolSet
 {
     public partial class Form1 : Form
     {
-        private iText.Layout.Document document;
+        private Document document;
         private bool documentSelected = false;
         private string uploadPath;
 
@@ -56,17 +57,22 @@ namespace PDF_Acc_ToolSet
                 // Load the PDF writer and document
                 PdfWriter writer = new(FileSaveDialogue.FileName, writerProperties.Data.writer);
                 PdfDocument pdf = new(new PdfReader(path), writer);
-
-                // Set lang and title
-                pdf.GetCatalog().SetLang(new PdfString(writerProperties.Data.meta.Language));
-                pdf.GetCatalog().SetViewerPreferences(new PdfViewerPreferences().SetDisplayDocTitle(true));
-                pdf.GetDocumentInfo().SetTitle(writerProperties.Data.meta.Title);
-
+                // Load the document for editing
+                document = new Document(pdf);
+                
                 // Enable tags! Must have for acc operations.
                 pdf.SetTagged();
 
-                // Load the document for editing
-                document = new iText.Layout.Document(pdf);
+                // Set lang and title
+                pdf.GetCatalog().SetLang(new PdfString(writerProperties.Data.meta.Language));
+                
+                // If a title was entered, set it
+                if (writerProperties.Data.meta.Title != null)
+                {
+                    pdf.GetDocumentInfo().SetTitle(writerProperties.Data.meta.Title);
+                    pdf.GetCatalog().SetViewerPreferences(new PdfViewerPreferences().SetDisplayDocTitle(true));
+                }
+
                 documentSelected = true;
 
                 // Set the PDF info in util
@@ -81,11 +87,13 @@ namespace PDF_Acc_ToolSet
                 // Enable the save and cancel button
                 SaveBtn.Enabled = true;
                 CancelBtn.Enabled = true;
+                MessageBox.Show((document == null).ToString());
             }
-            catch
+            catch (Exception)
             {
                 MessageBox.Show("There was an error reading the PDF. Check for file corruption and ensure that you have write access.",
                     "Upload Error");
+                throw;
             }
         }
 
@@ -281,6 +289,7 @@ namespace PDF_Acc_ToolSet
 
         private void CancelBtn_Click(object sender, EventArgs e)
         {
+            MessageBox.Show((document == null).ToString());
             DialogResult result = MessageBox.Show(
                 "Are you sure? All changes will be removed.", "Remove Pending Changes", MessageBoxButtons.YesNo
                 );

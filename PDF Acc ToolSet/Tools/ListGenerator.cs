@@ -14,7 +14,7 @@
             // Get the selection from the user
             int amountOfLists = (int)ListItemAmountNumeric.Value;
             bool addLabels = ListLabelCheckbox.Checked;
-            string listTitle = TitleTxt.Text;
+            string listTitle = TitleTxt.Text.Trim();
 
             // Emit the values to the main form
             ListGenerationCompleted?.Invoke(this, new ListGeneration(amountOfLists, addLabels, listTitle));

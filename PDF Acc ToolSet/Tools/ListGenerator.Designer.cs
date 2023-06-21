@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListGenerator));
             groupBox1 = new GroupBox();
             label5 = new Label();
             label4 = new Label();
@@ -38,12 +39,16 @@
             ListItemAmountNumeric = new NumericUpDown();
             GenerateBtn = new Button();
             ResetBtn = new Button();
+            label6 = new Label();
+            TitleTxt = new TextBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ListItemAmountNumeric).BeginInit();
             SuspendLayout();
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(TitleTxt);
+            groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(label3);
@@ -60,16 +65,16 @@
             // 
             // label5
             // 
-            label5.Location = new Point(6, 149);
+            label5.Location = new Point(6, 179);
             label5.Name = "label5";
             label5.Size = new Size(260, 95);
             label5.TabIndex = 6;
-            label5.Text = "Each generation includes a parent List tag, x amount of list items, x amount of list item bodies, and an optional x amount of labels.";
+            label5.Text = resources.GetString("label5.Text");
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(11, 119);
+            label4.Location = new Point(11, 149);
             label4.Name = "label4";
             label4.Size = new Size(58, 15);
             label4.TabIndex = 5;
@@ -140,6 +145,23 @@
             ResetBtn.UseVisualStyleBackColor = true;
             ResetBtn.Click += ResetBtn_Click;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(11, 119);
+            label6.Name = "label6";
+            label6.Size = new Size(89, 15);
+            label6.TabIndex = 7;
+            label6.Text = "Title of Element";
+            // 
+            // TitleTxt
+            // 
+            TitleTxt.Location = new Point(147, 117);
+            TitleTxt.Name = "TitleTxt";
+            TitleTxt.PlaceholderText = "Optional";
+            TitleTxt.Size = new Size(100, 23);
+            TitleTxt.TabIndex = 8;
+            // 
             // ListGenerator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -170,5 +192,7 @@
         private Label label3;
         private Label label4;
         private Label label5;
+        private TextBox TitleTxt;
+        private Label label6;
     }
 }

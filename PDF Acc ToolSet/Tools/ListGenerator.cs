@@ -14,16 +14,10 @@
             // Get the selection from the user
             int amountOfLists = (int)ListItemAmountNumeric.Value;
             bool addLabels = ListLabelCheckbox.Checked;
-
-            // Check for invalid values
-
+            string listTitle = TitleTxt.Text;
 
             // Emit the values to the main form
-            EventHandler<ListGeneration> handler = ListGenerationCompleted;
-            if (handler != null)
-            {
-                handler(this, new ListGeneration(amountOfLists, addLabels));
-            }
+            ListGenerationCompleted?.Invoke(this, new ListGeneration(amountOfLists, addLabels, listTitle));
         }
 
         private void ResetBtn_Click(object sender, EventArgs e)

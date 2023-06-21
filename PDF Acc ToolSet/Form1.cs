@@ -140,6 +140,13 @@ namespace PDF_Acc_ToolSet
             TagTreePointer tags = document.GetPdfDocument().GetTagStructureContext().GetAutoTaggingPointer();
             // Add the parent list element to the beginning of the tag tree
             tags.AddTag(0, "L");
+            // Set the ID if it exists
+            if (list.title != null && list.title.Trim().Length > 0)
+            {
+                // Create a PDF attr with the title property, add it to tree
+
+                
+            }
 
             // For each item to be generated, add the required items
             for (int i = 0; i < list.listItems; i++)

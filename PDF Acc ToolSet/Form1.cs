@@ -1,8 +1,11 @@
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Tagging;
 using iText.Kernel.Pdf.Tagutils;
 using iText.Layout;
+using iText.Layout.Properties;
 using PDF_Acc_ToolSet.Tools;
 using PDF_Acc_ToolSet.Utils;
 
@@ -87,7 +90,6 @@ namespace PDF_Acc_ToolSet
                 // Enable the save and cancel button
                 SaveBtn.Enabled = true;
                 CancelBtn.Enabled = true;
-                MessageBox.Show((document == null).ToString());
             }
             catch (Exception)
             {
@@ -148,12 +150,17 @@ namespace PDF_Acc_ToolSet
             TagTreePointer tags = document.GetPdfDocument().GetTagStructureContext().GetAutoTaggingPointer();
             // Add the parent list element to the beginning of the tag tree
             tags.AddTag(0, "L");
-            // Set the ID if it exists
-            if (list.title != null && list.title.Trim().Length > 0)
+            
+            // Set the title if it exists
+            if (list.title != null && list.title.Length > 0)
             {
-                // Create a PDF attr with the title property, add it to tree
+                // Get the PDF dictionary for the list, add it to tree. PdfName.T represents the title
+                tags.GetContext().GetPointerStructElem(tags).Put(PdfName.T, new PdfString(list.title));
 
-                
+                // Old method from itext docs. Worked, but required manual tag tree traversal
+                //PdfDictionary d = document.GetPdfDocument().GetCatalog().GetPdfObject().GetAsDictionary(PdfName.StructTreeRoot);
+                //PdfArray a = d.GetAsArray(PdfName.K);
+                //a.GetAsDictionary(0).Put(PdfName.T, new PdfString("some title"));
             }
 
             // For each item to be generated, add the required items
@@ -186,6 +193,13 @@ namespace PDF_Acc_ToolSet
 
             // Add the parent table element to the beginning of the tag tree
             tags.AddTag(0, "Table");
+
+            // Set the ID if it exists
+            if (table.title != null && table.title.Length > 0)
+            {
+                // Get the PDF dictionary for the table, add it to tree. PdfName.T represents the title
+                tags.GetContext().GetPointerStructElem(tags).Put(PdfName.T, new PdfString(table.title));
+            }
 
             // For each row to be generated, add the required columns
             for (int i = 0; i < table.rowCount; i++)
@@ -289,7 +303,6 @@ namespace PDF_Acc_ToolSet
 
         private void CancelBtn_Click(object sender, EventArgs e)
         {
-            MessageBox.Show((document == null).ToString());
             DialogResult result = MessageBox.Show(
                 "Are you sure? All changes will be removed.", "Remove Pending Changes", MessageBoxButtons.YesNo
                 );

@@ -117,4 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Each table will a set amount of rows and columns. The first row will contain header cells. Each row has the same amount of columns by default.
+
+The title is used for identification purposes, and has no effect on accessibility.</value>
+  </data>
 </root>

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableGenerator));
             groupBox1 = new GroupBox();
             label3 = new Label();
             TableRowAmountNumeric = new NumericUpDown();
@@ -36,6 +37,8 @@
             TableColumnAmountNumeric = new NumericUpDown();
             GenerateBtn = new Button();
             ResetBtn = new Button();
+            label4 = new Label();
+            TitleTxt = new TextBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TableRowAmountNumeric).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TableColumnAmountNumeric).BeginInit();
@@ -43,6 +46,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(TitleTxt);
+            groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(TableRowAmountNumeric);
             groupBox1.Controls.Add(label2);
@@ -50,7 +55,7 @@
             groupBox1.Controls.Add(TableColumnAmountNumeric);
             groupBox1.Location = new Point(22, 31);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(270, 185);
+            groupBox1.Size = new Size(270, 281);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Table Generator";
@@ -76,11 +81,11 @@
             // 
             // label2
             // 
-            label2.Location = new Point(10, 107);
+            label2.Location = new Point(6, 154);
             label2.Name = "label2";
-            label2.Size = new Size(254, 61);
+            label2.Size = new Size(254, 113);
             label2.TabIndex = 1;
-            label2.Text = "Each table will a set amount of rows and columns. The first row will contain header cells. Each row has the same amount of columns by default.";
+            label2.Text = resources.GetString("label2.Text");
             // 
             // label1
             // 
@@ -101,7 +106,7 @@
             // 
             // GenerateBtn
             // 
-            GenerateBtn.Location = new Point(42, 239);
+            GenerateBtn.Location = new Point(53, 333);
             GenerateBtn.Name = "GenerateBtn";
             GenerateBtn.Size = new Size(75, 23);
             GenerateBtn.TabIndex = 1;
@@ -111,7 +116,7 @@
             // 
             // ResetBtn
             // 
-            ResetBtn.Location = new Point(169, 239);
+            ResetBtn.Location = new Point(174, 333);
             ResetBtn.Name = "ResetBtn";
             ResetBtn.Size = new Size(75, 23);
             ResetBtn.TabIndex = 2;
@@ -119,11 +124,28 @@
             ResetBtn.UseVisualStyleBackColor = true;
             ResetBtn.Click += ResetBtn_Click;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(10, 117);
+            label4.Name = "label4";
+            label4.Size = new Size(29, 15);
+            label4.TabIndex = 4;
+            label4.Text = "Title";
+            // 
+            // TitleTxt
+            // 
+            TitleTxt.Location = new Point(127, 114);
+            TitleTxt.Name = "TitleTxt";
+            TitleTxt.PlaceholderText = "Optional";
+            TitleTxt.Size = new Size(100, 23);
+            TitleTxt.TabIndex = 5;
+            // 
             // TableGenerator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(317, 285);
+            ClientSize = new Size(317, 380);
             Controls.Add(ResetBtn);
             Controls.Add(GenerateBtn);
             Controls.Add(groupBox1);
@@ -148,5 +170,7 @@
         private Label label1;
         private Button GenerateBtn;
         private Button ResetBtn;
+        private TextBox TitleTxt;
+        private Label label4;
     }
 }

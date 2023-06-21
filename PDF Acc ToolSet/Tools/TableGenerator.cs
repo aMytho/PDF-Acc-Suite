@@ -29,11 +29,7 @@ namespace PDF_Acc_ToolSet.Tools
 
 
             // Emit the values to the main form
-            EventHandler<TableGeneration> handler = TableGeneratorChanged;
-            if (handler != null)
-            {
-                handler(this, new TableGeneration(rowCount, columnCount));
-            }
+            TableGeneratorChanged?.Invoke(this, new TableGeneration(rowCount, columnCount, TitleTxt.Text.Trim()));
         }
 
         private void ResetBtn_Click(object sender, EventArgs e)

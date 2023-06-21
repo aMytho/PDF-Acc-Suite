@@ -6,12 +6,15 @@
         public int rowCount;
         // The amount of columns per row
         public int columnCount;
+        // The title of the element
+        public string title;
 
         // Constructor, assign initial values
-        public TableGeneration(int rowCount, int columnCount)
+        public TableGeneration(int rowCount, int columnCount, string title)
         {
             this.rowCount = rowCount;
             this.columnCount = columnCount;
+            this.title = title;
         }
     }
 }

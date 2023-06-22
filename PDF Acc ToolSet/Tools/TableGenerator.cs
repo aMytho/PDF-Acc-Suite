@@ -40,6 +40,10 @@ namespace PDF_Acc_ToolSet.Tools
 
         private void TableGenerator_KeyDown(object sender, KeyEventArgs e)
         {
+            // Don't run if in input
+            if (TitleTxt.Focused)
+                return;
+
             // Run the related shortcut
             switch (e.KeyCode)
             {

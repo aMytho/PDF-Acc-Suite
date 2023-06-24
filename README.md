@@ -47,3 +47,9 @@ Nearly every button/action has a keyboard shortcut. Cutting down remediation tim
 ## Feature Requests
 
 Let me know if you have any suggestions. This is just a side project to help myself at work, but anyone is welcome to suggest improvements or contribute directly!
+
+## License
+
+This software is under the AGLPLv3 license as it uses the community edition of the itext library.
+This project does not modify the iText software in any way.
+Their license can be seen on the [iText License](https://itextpdf.com/how-buy/legal/agpl-gnu-affero-general-public-license) page.

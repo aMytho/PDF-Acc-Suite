@@ -65,13 +65,13 @@ namespace PDF_Acc_ToolSet.Utils
             return matchingTags;
         }
         
-        private static string CombineTagName(string tagName)
+        public static string CombineTagName(string tagName)
         {
             // In the tag tree, roles (tagnames) have a starting "/". *Sigh*
             return "/" + tagName;
         }
 
-        private static string ConvertRole(PdfName tagName) {
+        public static string ConvertRole(PdfName tagName) {
             // Converts a role. Some tags are mapped to other tags, this function returns the new value
             if (roleMap.Get(tagName) == null)
             {
@@ -86,7 +86,7 @@ namespace PDF_Acc_ToolSet.Utils
             
         }
 
-        private static string GetTagByEnum(TagType tagType)
+        public static string GetTagByEnum(TagType tagType)
         {
             return tagType switch
             {
@@ -127,6 +127,14 @@ namespace PDF_Acc_ToolSet.Utils
                 TagType.Reference => "Reference",
                 _ => throw new ArgumentOutOfRangeException(nameof(tagType), tagType, "Invalid tag type"),
             };
+        }
+
+        public static string GetTagByEnum(TagType tagType, bool combineTag)
+        {
+            string tag = GetTagByEnum(tagType);
+            if (combineTag)
+                return "/" + tag;
+            return tag;
         }
     }
 

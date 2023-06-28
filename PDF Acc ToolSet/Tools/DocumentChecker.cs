@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using iText.Kernel.Pdf.Tagutils;
+//using MaterialSkin.Controls;
 using PDF_Acc_ToolSet.Utils.Checks;
 
 namespace PDF_Acc_ToolSet.Tools
@@ -60,11 +61,6 @@ namespace PDF_Acc_ToolSet.Tools
             failedHumanChecks = 0;
             CheckStatusLbl.Text = "Unchecked";
             CheckStatusLbl.ForeColor = Color.Black;
-        }
-
-        private void ViewFailedCondionsBtn_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("A list has an invalid structure");
         }
     }
 }

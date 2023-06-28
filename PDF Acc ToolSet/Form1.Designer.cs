@@ -33,6 +33,7 @@
             label2 = new Label();
             FileUpload = new Button();
             ToolGroupBox = new GroupBox();
+            TagCheckerBtn = new Button();
             TblGenBtn = new Button();
             ListGenBtn = new Button();
             FileUploadDialogue = new OpenFileDialog();
@@ -46,18 +47,20 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(84, 21);
+            label1.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(37, 18);
             label1.Name = "label1";
-            label1.Size = new Size(81, 15);
+            label1.Size = new Size(180, 37);
             label1.TabIndex = 0;
             label1.Text = "PDF Acc Tools";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(28, 64);
+            label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Location = new Point(17, 55);
             label2.Name = "label2";
-            label2.Size = new Size(195, 15);
+            label2.Size = new Size(229, 19);
             label2.TabIndex = 1;
             label2.Text = "Select a PDF and then choose a tool";
             // 
@@ -76,6 +79,7 @@
             // 
             // ToolGroupBox
             // 
+            ToolGroupBox.Controls.Add(TagCheckerBtn);
             ToolGroupBox.Controls.Add(TblGenBtn);
             ToolGroupBox.Controls.Add(ListGenBtn);
             ToolGroupBox.Enabled = false;
@@ -85,6 +89,16 @@
             ToolGroupBox.TabIndex = 4;
             ToolGroupBox.TabStop = false;
             ToolGroupBox.Text = "Tools";
+            // 
+            // TagCheckerBtn
+            // 
+            TagCheckerBtn.Location = new Point(41, 105);
+            TagCheckerBtn.Name = "TagCheckerBtn";
+            TagCheckerBtn.Size = new Size(120, 23);
+            TagCheckerBtn.TabIndex = 2;
+            TagCheckerBtn.Text = "Verify Accessibility";
+            TagCheckerBtn.UseVisualStyleBackColor = true;
+            TagCheckerBtn.Click += TagCheckerBtn_Click;
             // 
             // TblGenBtn
             // 
@@ -192,5 +206,6 @@
         private Button SaveBtn;
         private Button CancelBtn;
         private SaveFileDialog FileSaveDialogue;
+        private Button TagCheckerBtn;
     }
 }

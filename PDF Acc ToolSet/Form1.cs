@@ -62,13 +62,13 @@ namespace PDF_Acc_ToolSet
                 PdfDocument pdf = new(new PdfReader(path), writer);
                 // Load the document for editing
                 document = new Document(pdf);
-                
+
                 // Enable tags! Must have for acc operations.
                 pdf.SetTagged();
 
                 // Set lang and title
                 pdf.GetCatalog().SetLang(new PdfString(writerProperties.Data.meta.Language));
-                
+
                 // If a title was entered, set it
                 if (writerProperties.Data.meta.Title != null)
                 {
@@ -150,7 +150,7 @@ namespace PDF_Acc_ToolSet
             TagTreePointer tags = document.GetPdfDocument().GetTagStructureContext().GetAutoTaggingPointer();
             // Add the parent list element to the beginning of the tag tree
             tags.AddTag(0, "L");
-            
+
             // Set the title if it exists
             if (list.title != null && list.title.Length > 0)
             {
@@ -374,6 +374,12 @@ namespace PDF_Acc_ToolSet
                     CancelBtn.PerformClick();
                     break;
             }
+        }
+
+        private void TagCheckerBtn_Click(object sender, EventArgs e)
+        {
+            DocumentChecker form = new(document.GetPdfDocument().GetTagStructureContext().GetAutoTaggingPointer());
+            form.ShowDialog();
         }
     }
 }

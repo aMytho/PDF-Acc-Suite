@@ -1,11 +1,8 @@
 using System;
 using System.Diagnostics;
-using System.Reflection;
 using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Tagging;
 using iText.Kernel.Pdf.Tagutils;
 using iText.Layout;
-using iText.Layout.Properties;
 using PDF_Acc_ToolSet.Tools;
 using PDF_Acc_ToolSet.Utils;
 
@@ -216,8 +213,16 @@ namespace PDF_Acc_ToolSet
                     }
                     else
                     {
-                        // Its not a header row, so we add normal table cells
-                        tags.AddTag("TD");
+                        // Its not a header row, so we add normal data cells.
+                        // Altneratively, if column headers are enabled the first column will be a header cell
+                        if (j == 0 && table.addRowHeaders)
+                        {
+                            tags.AddTag("TH");
+                        } else
+                        {
+                            // No row header, use normal cell
+                            tags.AddTag("TD");
+                        }
                     }
 
                     // Return to the parent row for the next iteration (add more columns)

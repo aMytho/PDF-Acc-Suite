@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableGenerator));
             groupBox1 = new GroupBox();
+            RowHeadersCmbBox = new CheckBox();
+            label5 = new Label();
+            TitleTxt = new TextBox();
+            label4 = new Label();
             label3 = new Label();
             TableRowAmountNumeric = new NumericUpDown();
             label2 = new Label();
@@ -37,8 +41,6 @@
             TableColumnAmountNumeric = new NumericUpDown();
             GenerateBtn = new Button();
             ResetBtn = new Button();
-            label4 = new Label();
-            TitleTxt = new TextBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TableRowAmountNumeric).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TableColumnAmountNumeric).BeginInit();
@@ -46,6 +48,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(RowHeadersCmbBox);
+            groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(TitleTxt);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(label3);
@@ -55,10 +59,46 @@
             groupBox1.Controls.Add(TableColumnAmountNumeric);
             groupBox1.Location = new Point(22, 31);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(270, 281);
+            groupBox1.Size = new Size(270, 333);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Table Generator";
+            // 
+            // RowHeadersCmbBox
+            // 
+            RowHeadersCmbBox.AutoSize = true;
+            RowHeadersCmbBox.Location = new Point(127, 155);
+            RowHeadersCmbBox.Name = "RowHeadersCmbBox";
+            RowHeadersCmbBox.Size = new Size(80, 19);
+            RowHeadersCmbBox.TabIndex = 7;
+            RowHeadersCmbBox.Text = "(Optional)";
+            RowHeadersCmbBox.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(10, 156);
+            label5.Name = "label5";
+            label5.Size = new Size(106, 15);
+            label5.TabIndex = 6;
+            label5.Text = "Add Row Headers?";
+            // 
+            // TitleTxt
+            // 
+            TitleTxt.Location = new Point(127, 114);
+            TitleTxt.Name = "TitleTxt";
+            TitleTxt.PlaceholderText = "Optional";
+            TitleTxt.Size = new Size(100, 23);
+            TitleTxt.TabIndex = 5;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(10, 117);
+            label4.Name = "label4";
+            label4.Size = new Size(29, 15);
+            label4.TabIndex = 4;
+            label4.Text = "Title";
             // 
             // label3
             // 
@@ -81,7 +121,7 @@
             // 
             // label2
             // 
-            label2.Location = new Point(6, 154);
+            label2.Location = new Point(6, 203);
             label2.Name = "label2";
             label2.Size = new Size(254, 113);
             label2.TabIndex = 1;
@@ -106,7 +146,7 @@
             // 
             // GenerateBtn
             // 
-            GenerateBtn.Location = new Point(53, 333);
+            GenerateBtn.Location = new Point(53, 384);
             GenerateBtn.Name = "GenerateBtn";
             GenerateBtn.Size = new Size(75, 23);
             GenerateBtn.TabIndex = 1;
@@ -116,7 +156,7 @@
             // 
             // ResetBtn
             // 
-            ResetBtn.Location = new Point(174, 333);
+            ResetBtn.Location = new Point(174, 384);
             ResetBtn.Name = "ResetBtn";
             ResetBtn.Size = new Size(75, 23);
             ResetBtn.TabIndex = 2;
@@ -124,28 +164,11 @@
             ResetBtn.UseVisualStyleBackColor = true;
             ResetBtn.Click += ResetBtn_Click;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(10, 117);
-            label4.Name = "label4";
-            label4.Size = new Size(29, 15);
-            label4.TabIndex = 4;
-            label4.Text = "Title";
-            // 
-            // TitleTxt
-            // 
-            TitleTxt.Location = new Point(127, 114);
-            TitleTxt.Name = "TitleTxt";
-            TitleTxt.PlaceholderText = "Optional";
-            TitleTxt.Size = new Size(100, 23);
-            TitleTxt.TabIndex = 5;
-            // 
             // TableGenerator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(317, 380);
+            ClientSize = new Size(317, 437);
             Controls.Add(ResetBtn);
             Controls.Add(GenerateBtn);
             Controls.Add(groupBox1);
@@ -172,5 +195,7 @@
         private Button ResetBtn;
         private TextBox TitleTxt;
         private Label label4;
+        private CheckBox RowHeadersCmbBox;
+        private Label label5;
     }
 }

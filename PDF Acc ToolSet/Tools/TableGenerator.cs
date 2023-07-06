@@ -24,12 +24,13 @@ namespace PDF_Acc_ToolSet.Tools
             // Get the selection from the user
             int columnCount = (int)TableColumnAmountNumeric.Value;
             int rowCount = (int)TableRowAmountNumeric.Value;
+            bool addRowHeaders = RowHeadersCmbBox.Checked;
 
             // Check for invalid values
 
 
             // Emit the values to the main form
-            TableGeneratorChanged?.Invoke(this, new TableGeneration(rowCount, columnCount, TitleTxt.Text.Trim()));
+            TableGeneratorChanged?.Invoke(this, new TableGeneration(rowCount, columnCount, TitleTxt.Text.Trim(), addRowHeaders));
         }
 
         private void ResetBtn_Click(object sender, EventArgs e)

@@ -119,9 +119,9 @@
   </resheader>
   <data name="label2.Text" xml:space="preserve">
     <value>Each Checkpoint contains a group of related failure conditions.
-A Red button indicates at least one condition has failed.
-A Yellow button indicates that at least one condition requires a manual check.
-A Green button indicates that all conditions have passed successfully.
+A red x indicates at least one condition has failed.
+A yellow dash indicates that at least one condition requires a manual check.
+A green check indicates that all conditions have passed successfully.
 No Color indicates that the condion has not been checked.</value>
   </data>
 </root>

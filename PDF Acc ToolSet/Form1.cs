@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Tagutils;
@@ -127,7 +126,7 @@ namespace PDF_Acc_ToolSet
             if (!documentSelected) return;
 
             // Load the new form
-            ListGenerator newForm = new ListGenerator();
+            ListGenerator newForm = new();
             // Listen for the selection
             newForm.ListGenerationCompleted += (sender, e) =>
             {
@@ -218,7 +217,8 @@ namespace PDF_Acc_ToolSet
                         if (j == 0 && table.addRowHeaders)
                         {
                             tags.AddTag("TH");
-                        } else
+                        }
+                        else
                         {
                             // No row header, use normal cell
                             tags.AddTag("TD");
@@ -244,7 +244,7 @@ namespace PDF_Acc_ToolSet
             if (!documentSelected) return;
 
             // Load the new form
-            TableGenerator newForm = new TableGenerator();
+            TableGenerator newForm = new();
             // Listen for the selection
             newForm.TableGeneratorChanged += (sender, e) =>
             {

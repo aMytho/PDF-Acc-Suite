@@ -3,13 +3,14 @@ using iText.Kernel.Pdf.Tagutils;
 
 namespace PDF_Acc_ToolSet.Utils.Checks
 {
-    internal class Checkpoint9
+    internal class Checkpoint9 : Checkpoint
     {
         public Check005 Check005;
 
         public Checkpoint9(TagTreePointer pointer) {
             // Load the checks for checkpoiont 9
             Check005 = new("09-005", "UA1:7.2.1", "Check that each list is valid", Validator.Machine, pointer);
+            checks.Add(Check005);
         }
         
         public static Check CheckSpecific(Check check)
@@ -112,13 +113,13 @@ namespace PDF_Acc_ToolSet.Utils.Checks
             };
 
             // Check passed!
-            state = CheckStatus.Success;
+            status = CheckStatus.Success;
             return CheckStatus.Success;
         }
 
         private CheckStatus FailCheck()
         {
-            state = CheckStatus.Failure;
+            status = CheckStatus.Failure;
             return CheckStatus.Failure;
         }
     }

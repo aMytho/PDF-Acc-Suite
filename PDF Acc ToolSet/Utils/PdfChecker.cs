@@ -7,7 +7,7 @@
     {
     }
 
-    internal abstract class Check
+    public abstract class Check
     {
         /// <summary>
         /// Index of the check. In form xx-xxx such as 01-001 would be checkpoint 1, check 1.
@@ -26,7 +26,7 @@
         /// </summary>
         internal Validator validator;
 
-        internal CheckStatus state;
+        internal CheckStatus status;
 
         public Check(string index, string section, string failureCondition, Validator validator)
         {
@@ -39,7 +39,7 @@
         public abstract CheckStatus RunCheck();
     }
 
-    enum Validator
+    public enum Validator
     {
         /// <summary>
         /// The check must be done by a human
@@ -51,7 +51,7 @@
         Machine
     }
 
-    enum CheckStatus
+    public enum CheckStatus
     {
         Success,
         Failure,

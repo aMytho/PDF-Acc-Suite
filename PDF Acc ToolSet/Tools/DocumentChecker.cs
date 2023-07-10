@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using iText.Kernel.Pdf.Tagutils;
+﻿using iText.Kernel.Pdf.Tagutils;
+using PDF_Acc_ToolSet.Tools.Checker;
 //using MaterialSkin.Controls;
 using PDF_Acc_ToolSet.Utils.Checks;
 
@@ -25,6 +17,10 @@ namespace PDF_Acc_ToolSet.Tools
         {
             InitializeComponent();
 
+            // Set the UI initial values
+            FailedConditionsRemainingLbl.Text = (totalHumanChecks + totalMachineChecks).ToString();
+            ManualChecksRequiredLbl.Text = totalHumanChecks.ToString();
+
             // Give each checkpoint the data they need
             checkpoint9 = new(pointer);
         }
@@ -39,6 +35,10 @@ namespace PDF_Acc_ToolSet.Tools
 
                 CheckStatusLbl.Text = "Pass";
                 CheckStatusLbl.ForeColor = Color.Green;
+
+                // To-do: Increment this. Since we only have 1 check this is acceptable for now
+                label95.Text = "0";
+                label94.Text = "1";
             }
             else
             {
@@ -47,6 +47,9 @@ namespace PDF_Acc_ToolSet.Tools
 
                 CheckStatusLbl.Text = "Fail";
                 CheckStatusLbl.ForeColor = Color.Red;
+
+                // To-do: Increment this. Since we only have 1 check this is acceptable for now
+                label95.Text = "1";
             }
         }
 
@@ -61,6 +64,12 @@ namespace PDF_Acc_ToolSet.Tools
             failedHumanChecks = 0;
             CheckStatusLbl.Text = "Unchecked";
             CheckStatusLbl.ForeColor = Color.Black;
+        }
+
+        private void Check9Btn_Click(object sender, EventArgs e)
+        {
+            ConditionViewer viewer = new(checkpoint9);
+            viewer.Show();
         }
     }
 }

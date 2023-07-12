@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListGenerator));
             groupBox1 = new GroupBox();
+            TitleTxt = new TextBox();
+            label6 = new Label();
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
@@ -39,8 +41,6 @@
             ListItemAmountNumeric = new NumericUpDown();
             GenerateBtn = new Button();
             ResetBtn = new Button();
-            label6 = new Label();
-            TitleTxt = new TextBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ListItemAmountNumeric).BeginInit();
             SuspendLayout();
@@ -62,6 +62,23 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "List Options";
+            // 
+            // TitleTxt
+            // 
+            TitleTxt.Location = new Point(147, 117);
+            TitleTxt.Name = "TitleTxt";
+            TitleTxt.PlaceholderText = "Optional";
+            TitleTxt.Size = new Size(100, 23);
+            TitleTxt.TabIndex = 8;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(11, 119);
+            label6.Name = "label6";
+            label6.Size = new Size(89, 15);
+            label6.TabIndex = 7;
+            label6.Text = "Title of Element";
             // 
             // label5
             // 
@@ -145,27 +162,11 @@
             ResetBtn.UseVisualStyleBackColor = true;
             ResetBtn.Click += ResetBtn_Click;
             // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(11, 119);
-            label6.Name = "label6";
-            label6.Size = new Size(89, 15);
-            label6.TabIndex = 7;
-            label6.Text = "Title of Element";
-            // 
-            // TitleTxt
-            // 
-            TitleTxt.Location = new Point(147, 117);
-            TitleTxt.Name = "TitleTxt";
-            TitleTxt.PlaceholderText = "Optional";
-            TitleTxt.Size = new Size(100, 23);
-            TitleTxt.TabIndex = 8;
-            // 
             // ListGenerator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(340, 372);
             Controls.Add(ResetBtn);
             Controls.Add(GenerateBtn);

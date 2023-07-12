@@ -134,6 +134,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(341, 293);
             Controls.Add(groupBox1);
             Name = "DocumentInfo";

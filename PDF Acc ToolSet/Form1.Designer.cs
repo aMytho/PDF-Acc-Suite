@@ -67,12 +67,15 @@
             // FileUpload
             // 
             FileUpload.AllowDrop = true;
+            FileUpload.BackColor = Color.SkyBlue;
+            FileUpload.FlatAppearance.BorderSize = 2;
+            FileUpload.FlatStyle = FlatStyle.Flat;
             FileUpload.Location = new Point(28, 93);
             FileUpload.Name = "FileUpload";
             FileUpload.Size = new Size(195, 65);
             FileUpload.TabIndex = 3;
             FileUpload.Text = "Upload";
-            FileUpload.UseVisualStyleBackColor = true;
+            FileUpload.UseVisualStyleBackColor = false;
             FileUpload.Click += FileUpload_Click;
             FileUpload.DragDrop += FileUpload_DragDrop;
             FileUpload.DragOver += FileUpload_DragOver;
@@ -92,33 +95,46 @@
             // 
             // TagCheckerBtn
             // 
-            TagCheckerBtn.Location = new Point(41, 105);
+            TagCheckerBtn.BackColor = Color.Azure;
+            TagCheckerBtn.FlatAppearance.BorderSize = 2;
+            TagCheckerBtn.FlatStyle = FlatStyle.Flat;
+            TagCheckerBtn.Location = new Point(37, 123);
             TagCheckerBtn.Name = "TagCheckerBtn";
-            TagCheckerBtn.Size = new Size(120, 23);
+            TagCheckerBtn.Padding = new Padding(2);
+            TagCheckerBtn.Size = new Size(121, 35);
             TagCheckerBtn.TabIndex = 2;
             TagCheckerBtn.Text = "Verify Accessibility";
-            TagCheckerBtn.UseVisualStyleBackColor = true;
+            TagCheckerBtn.UseVisualStyleBackColor = false;
             TagCheckerBtn.Click += TagCheckerBtn_Click;
             // 
             // TblGenBtn
             // 
-            TblGenBtn.Location = new Point(51, 64);
+            TblGenBtn.BackColor = Color.Azure;
+            TblGenBtn.FlatAppearance.BorderSize = 2;
+            TblGenBtn.FlatStyle = FlatStyle.Flat;
+            TblGenBtn.Location = new Point(37, 82);
             TblGenBtn.Name = "TblGenBtn";
-            TblGenBtn.Size = new Size(99, 23);
+            TblGenBtn.Padding = new Padding(2);
+            TblGenBtn.Size = new Size(121, 35);
             TblGenBtn.TabIndex = 1;
             TblGenBtn.Text = "Table Generator";
-            TblGenBtn.UseVisualStyleBackColor = true;
+            TblGenBtn.UseVisualStyleBackColor = false;
             TblGenBtn.Click += TblGenBtn_Click;
             // 
             // ListGenBtn
             // 
             ListGenBtn.AutoSize = true;
-            ListGenBtn.Location = new Point(56, 22);
+            ListGenBtn.BackColor = Color.Azure;
+            ListGenBtn.FlatAppearance.BorderColor = SystemColors.MenuText;
+            ListGenBtn.FlatAppearance.BorderSize = 2;
+            ListGenBtn.FlatStyle = FlatStyle.Flat;
+            ListGenBtn.Location = new Point(37, 39);
             ListGenBtn.Name = "ListGenBtn";
-            ListGenBtn.Size = new Size(90, 25);
+            ListGenBtn.Padding = new Padding(2);
+            ListGenBtn.Size = new Size(121, 37);
             ListGenBtn.TabIndex = 0;
             ListGenBtn.Text = "List Generator";
-            ListGenBtn.UseVisualStyleBackColor = true;
+            ListGenBtn.UseVisualStyleBackColor = false;
             ListGenBtn.Click += ListGenBtn_Click;
             // 
             // FileUploadDialogue
@@ -174,6 +190,7 @@
             AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(258, 470);
             Controls.Add(CancelBtn);
             Controls.Add(SaveBtn);

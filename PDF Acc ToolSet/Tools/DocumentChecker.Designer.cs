@@ -32,7 +32,7 @@
             CheckAllBtn = new Button();
             groupBox1 = new GroupBox();
             BtnExit = new Button();
-            button3 = new Button();
+            MatterhornBtn = new Button();
             ResetBtn = new Button();
             FailedConditionsRemainingLbl = new Label();
             label9 = new Label();
@@ -387,7 +387,7 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(BtnExit);
-            groupBox1.Controls.Add(button3);
+            groupBox1.Controls.Add(MatterhornBtn);
             groupBox1.Controls.Add(ResetBtn);
             groupBox1.Controls.Add(CheckAllBtn);
             groupBox1.Location = new Point(13, 12);
@@ -407,14 +407,15 @@
             BtnExit.UseVisualStyleBackColor = true;
             BtnExit.Click += BtnExit_Click;
             // 
-            // button3
+            // MatterhornBtn
             // 
-            button3.Location = new Point(21, 82);
-            button3.Name = "button3";
-            button3.Size = new Size(75, 23);
-            button3.TabIndex = 6;
-            button3.Text = "Matterhorn";
-            button3.UseVisualStyleBackColor = true;
+            MatterhornBtn.Location = new Point(21, 82);
+            MatterhornBtn.Name = "MatterhornBtn";
+            MatterhornBtn.Size = new Size(75, 23);
+            MatterhornBtn.TabIndex = 6;
+            MatterhornBtn.Text = "Matterhorn";
+            MatterhornBtn.UseVisualStyleBackColor = true;
+            MatterhornBtn.Click += MatterhornBtn_Click;
             // 
             // ResetBtn
             // 
@@ -4113,6 +4114,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1007, 680);
             Controls.Add(groupBox1);
             Controls.Add(groupBox2);
@@ -4201,7 +4203,7 @@
         private Button CheckAllBtn;
         private GroupBox groupBox1;
         private Button ResetBtn;
-        private Button button3;
+        private Button MatterhornBtn;
         private Button BtnExit;
         private Label FailedConditionsRemainingLbl;
         private Label label9;

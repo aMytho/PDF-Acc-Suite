@@ -1,6 +1,6 @@
 ﻿using iText.Kernel.Pdf.Tagutils;
 using PDF_Acc_ToolSet.Tools.Checker;
-//using MaterialSkin.Controls;
+using PDF_Acc_ToolSet.Utils;
 using PDF_Acc_ToolSet.Utils.Checks;
 
 namespace PDF_Acc_ToolSet.Tools
@@ -70,6 +70,11 @@ namespace PDF_Acc_ToolSet.Tools
         {
             ConditionViewer viewer = new(checkpoint9);
             viewer.Show();
+        }
+
+        private void MatterhornBtn_Click(object sender, EventArgs e)
+        {
+            Documentation.OpenMatterhorn();
         }
     }
 }

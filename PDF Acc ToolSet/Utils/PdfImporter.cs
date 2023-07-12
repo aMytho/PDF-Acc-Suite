@@ -1,10 +1,5 @@
 ﻿using iText.Kernel.Pdf;
 using PDF_Acc_ToolSet.Tools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PDF_Acc_ToolSet.Utils
 {

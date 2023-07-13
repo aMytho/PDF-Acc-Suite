@@ -8,6 +8,9 @@ namespace PDF_Acc_ToolSet.Utils.Checks
         public Check005 Check005;
 
         public Checkpoint9(TagTreePointer pointer) {
+            // Set the properties for this checkpoint
+            matterhornLocation = "10";
+
             // Load the checks for checkpoiont 9
             Check005 = new("09-005", "UA1:7.2.1", "Check that each list is valid", Validator.Machine, pointer);
             checks.Add(Check005);

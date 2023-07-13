@@ -66,15 +66,18 @@
             ExitBtn.TabIndex = 4;
             ExitBtn.Text = "Close";
             ExitBtn.UseVisualStyleBackColor = true;
+            ExitBtn.Click += ExitBtn_Click;
             // 
             // PassChecksBtn
             // 
+            PassChecksBtn.Enabled = false;
             PassChecksBtn.Location = new Point(11, 175);
             PassChecksBtn.Name = "PassChecksBtn";
             PassChecksBtn.Size = new Size(93, 64);
             PassChecksBtn.TabIndex = 5;
             PassChecksBtn.Text = "Pass Manual Checks";
             PassChecksBtn.UseVisualStyleBackColor = true;
+            PassChecksBtn.Click += PassChecksBtn_Click;
             // 
             // groupBox1
             // 
@@ -120,11 +123,13 @@
             MatterhornBtn.TabIndex = 6;
             MatterhornBtn.Text = "View Matterhorn Checkpoint";
             MatterhornBtn.UseVisualStyleBackColor = true;
+            MatterhornBtn.Click += MatterhornBtn_Click;
             // 
             // ConditionViewer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(900, 420);
             Controls.Add(groupBox1);
             Controls.Add(ChecksBox);

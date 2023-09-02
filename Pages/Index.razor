@@ -1,0 +1,54 @@
+﻿@using PDF_Acc_Toolset.Pages.Tools
+
+@page "/"
+
+<h1 class="text-6xl font-extrabold">PDF Acc Toolset</h1>
+
+<p class="mt-4">Welcome to the Toolset! This app will help you with the remediation process of PDFs. Feel free to read our Documentation or experiment yourself.</p>
+<p class="mt-2">We suggest you make a copy of the PDF before you save any changes.</p>
+
+<hr class="w-11/12 text-center m-4" />
+
+<div class="flex flex-wrap mr-8 px-2 space-x-8">
+	<div class="">
+		<h2 class="text-4xl font-bold">File Selection</h2>
+		<p>Drag a PDF in or select the Upload button to get started!</p>
+	</div>
+	<div class="grow">
+		<button
+			class="bg-gradient-to-t from-emerald-800 to-emerald-400
+				hover:from-emerald-950 hover:to-emerald-500
+			p-4 w-full h-full m-2 rounded-lg text-lg">Upload</button>
+	</div>
+</div>
+
+<!-- Put the toolbox in the center-->
+<h3 class="text-2xl font-semibold">Toolbox</h3>
+<div class="mr-8 border border-solid border-green-400">
+	<Toolbox OnToolSelected="OnToolSelected"></Toolbox>
+</div>
+
+<!-- Tool window-->
+<div class="mt-4 mx-2">
+	@switch(activeTool)
+	{
+		case Tools.ListGen:
+			<ListGenerator />
+			break;
+		case Tools.TableGen:
+		case Tools.Validation:
+		case Tools.None:
+			break;
+	}
+</div>
+
+@code {
+	public enum Tools {ListGen, TableGen, Validation, None};
+	public Tools activeTool = Tools.None;
+
+	public void OnToolSelected(int tool)
+	{
+		// Set the active tool
+		this.activeTool = (Tools)tool;
+	}
+}

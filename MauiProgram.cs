@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using PDF_Acc_Toolset.Data;
+using PDF_Acc_Toolset.Services;
 
 namespace PDF_Acc_Toolset;
 
@@ -23,6 +24,8 @@ public static class MauiProgram
 #endif
 
 		builder.Services.AddSingleton<WeatherForecastService>();
+		builder.Services.AddSingleton<PdfManager>();
+		builder.Services.AddSingleton<TaskManager>();
 
 		return builder.Build();
 	}

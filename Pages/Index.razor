@@ -1,4 +1,7 @@
-﻿@using PDF_Acc_Toolset.Pages.Tools
+﻿@using PDF_Acc_Toolset.Pages.Tools;
+@using PDF_Acc_Toolset.Services;
+@using iText.Kernel.Pdf;
+@inject IJSRuntime JSRuntime;
 
 @page "/"
 
@@ -18,37 +21,147 @@
 		<button
 			class="bg-gradient-to-t from-emerald-800 to-emerald-400
 				hover:from-emerald-950 hover:to-emerald-500
-			p-4 w-full h-full m-2 rounded-lg text-lg">Upload</button>
+				p-4 w-full h-full m-2 rounded-lg text-lg"
+			@onclick="@UploadFile"
+		>Upload</button>
 	</div>
 </div>
 
-<!-- Put the toolbox in the center-->
-<h3 class="text-2xl font-semibold">Toolbox</h3>
-<div class="mr-8 border border-solid border-green-400">
-	<Toolbox OnToolSelected="OnToolSelected"></Toolbox>
+
+<!-- Show the import screen when a PDF is selected -->
+<div>
+    @if (showImport == true)
+    {
+        <ImportSettings OnImportConfirmed="OnImportSet" initialConfig="ConvertMetadataToImportDefault()" />
+    }
 </div>
+
+
+@if (showToolbox == true)
+{
+    <!-- Put the toolbox in the center-->
+    <h3 class="text-2xl font-semibold">Toolbox</h3>
+    <div class="mr-8 border border-solid border-green-400">
+	    <Toolbox OnToolSelected="OnToolSelected"></Toolbox>
+    </div>
+}
 
 <!-- Tool window-->
 <div class="mt-4 mx-2">
 	@switch(activeTool)
 	{
 		case Tools.ListGen:
-			<ListGenerator />
-			break;
-		case Tools.TableGen:
-		case Tools.Validation:
-		case Tools.None:
-			break;
-	}
+            <ListGenerator />
+            break;
+        case Tools.TableGen:
+        case Tools.Validation:
+        case Tools.None:
+            break;
+        default:
+            break;
+    }
 </div>
 
 @code {
-	public enum Tools {ListGen, TableGen, Validation, None};
-	public Tools activeTool = Tools.None;
+    public enum Tools {ListGen, TableGen, Validation, None};
+    public Tools activeTool = Tools.None;
 
-	public void OnToolSelected(int tool)
-	{
-		// Set the active tool
-		this.activeTool = (Tools)tool;
-	}
+    public bool showImport = false;
+    public bool showToolbox = false;
+
+    public PdfImportConfig import;
+    public PdfReader reader;
+
+    public void OnToolSelected(int tool)
+    {
+        // Set the active tool
+        this.activeTool = (Tools)tool;
+    }
+
+    /// <summary>
+    /// Requests an uploaded file and sends it to the PDF manager
+    /// </summary>
+    public async void UploadFile()
+    {
+        // Create new options
+        PickOptions uploadOptions = new();
+        // Set title
+        uploadOptions.PickerTitle = "Upload a PDF";
+        // Limit to PDF only
+        FilePickerFileType pdfType = new FilePickerFileType(
+            new Dictionary<DevicePlatform, IEnumerable<string>>
+			{
+				{ DevicePlatform.WinUI, new[] {".pdf"}},
+				{ DevicePlatform.Unknown, new[] {".pdf"}},
+			}
+        );
+        // Save filter
+        uploadOptions.FileTypes = pdfType;
+        // Wait for upload
+        var result = await FilePicker.PickAsync(uploadOptions);
+
+        // Get result
+        if (result == null)
+        {
+            // failed
+            return;
+        }
+
+        _ = JSRuntime.InvokeVoidAsync("console.log", result.FullPath);
+
+        // Validate upload
+        if (result.FullPath.Length == 0 || !result.FullPath.EndsWith("pdf"))
+        {
+            return;
+        }
+
+        // Send it to the PDF manager for processing
+        // This ensures that the PDF can be accessed (no file permission issues, file corruption, etc.)
+        var reader = PdfManager.SetInputFile(result.FullPath);
+        // Handle failed reads
+        if (!reader.success)
+        {
+            return;
+        }
+
+        // Save the reader for later
+        this.reader = reader.Data;
+
+        // Request metadata for the PDF. We pass this to the import component later
+        this.import = PdfManager.GetMetadata(this.reader);
+
+        // Request import settings from user
+        this.showImport = true;
+        StateHasChanged();
+
+        _ = JSRuntime.InvokeVoidAsync("console.log", "Done with PDF Upload");
+    }
+
+    public void OnImportSet(ImportSettings.ImportSelection import)
+    {
+        _ = JSRuntime.InvokeVoidAsync("console.log", "Import Complete!");
+
+        // Move to the next section
+        this.showImport = false;
+
+        // Create PDF import config based on the user import settings
+        this.import = new PdfImportConfig();
+
+        // based on the user settings, set the metadata for the output file
+        this.import.Title = import.Title;
+        this.import.Lang = import.Lang;
+        this.import.Standard = import.Standard;
+
+        // Show export page
+
+    }
+
+    /// <summary>
+    /// Returns an import selection from the metadata (type conversion)
+    /// </summary>
+    /// <returns></returns>
+    private ImportSettings.ImportSelection ConvertMetadataToImportDefault()
+    {
+        return new ImportSettings.ImportSelection(this.import.Title, this.import.Lang, this.import.Standard);
+    }
 }

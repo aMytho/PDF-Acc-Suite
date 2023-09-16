@@ -8,16 +8,27 @@ namespace PDF_Acc_Toolset.Services
 {
 	public class TaskManager
 	{
-		private static readonly AccessibilityTask[] Tasks = Array.Empty<AccessibilityTask>();
+		/// <summary>
+		/// List of tasks
+		/// </summary>
+		private static readonly List<AccessibilityTask> Tasks = new();
 
 		public static void RunQueuedTasks()
 		{
-
+			foreach (AccessibilityTask task in Tasks)
+			{
+				task.Run();
+			}
 		}
 
 		public static void AddTask(AccessibilityTask task)
 		{
-			_ = Tasks.Append(task);
+			Tasks.Add(task);
+		}
+
+		public static List<AccessibilityTask> GetAccessibilityTasks()
+		{
+			return Tasks;
 		}
 	}
 }

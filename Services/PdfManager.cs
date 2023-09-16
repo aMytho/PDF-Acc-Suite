@@ -1,6 +1,8 @@
 ﻿using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
+using PDF_Acc_Toolset.Services.Util;
+using System.Diagnostics;
 
 namespace PDF_Acc_Toolset.Services
 {
@@ -10,6 +12,8 @@ namespace PDF_Acc_Toolset.Services
 		/// Store the active PDF
 		/// </summary>
 		private static Document document;
+
+		private static string exportPath;
 
 		public static ImportOperation<PdfReader> SetInputFile(string file)
 		{
@@ -55,7 +59,7 @@ namespace PDF_Acc_Toolset.Services
 		public static void SetOutputFile(string path, string inputPath, PdfImportConfig conf)
 		{
 			// Adjust metadata (if needed)
-			if (conf.Standard.Equals("UA"))
+			if (conf.Standard != null && conf.Standard.Equals("UA"))
 			{
 				// TO-DO: add the other standards
 				conf.WriterConfig.AddUAXmpMetadata();
@@ -76,10 +80,41 @@ namespace PDF_Acc_Toolset.Services
             pdf.GetDocumentInfo().SetTitle(conf.Title);
 			// Display the document title instead of file name (acc)
             pdf.GetCatalog().SetViewerPreferences(new PdfViewerPreferences().SetDisplayDocTitle(true));
-            
-			// To-do: role map
+
+			// Set role map for custom tags
+			TagUtil.SetRoleMap(document.GetPdfDocument().GetStructTreeRoot().GetRoleMap());
+
+			// Save the export path
+			exportPath = path;
         }
-    }
+
+		/// <summary>
+		/// Returns the active document
+		/// </summary>
+		/// <returns></returns>
+		public static Document GetDocument() {
+			return document;
+		}
+
+		/// <summary>
+		/// Save the PDF, close all, move on in life...
+		/// </summary>
+		public static void Save()
+		{
+			document.Close();
+
+			// Try to open the PDF in the users default app. Explorer handles that operation.
+			// This is pretty neat, no need to access the registry!
+			try
+			{
+				Process process = new Process();
+				process.StartInfo.FileName = "explorer";
+				process.StartInfo.Arguments = "\"" + exportPath + "\"";
+				process.Start();
+			}
+			catch (Exception) {}
+		}
+	}
 
 	public struct ImportOperation<T>
 	{

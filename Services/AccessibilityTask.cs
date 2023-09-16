@@ -1,15 +1,21 @@
 ﻿using iText.Layout;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PDF_Acc_Toolset.Services
 {
+	/// <summary>
+	/// An accessibity task. This will modify the PDF in some way.
+	/// </summary>
 	public abstract class AccessibilityTask
 	{
+		/// <summary>
+		/// The PDF document. Primarily used for modifications to the PDF
+		/// </summary>
 		public Document Document;
+
+		/// <summary>
+		/// Is the task complete?
+		/// </summary>
+		public bool TaskComplete = false;
 
 		public AccessibilityTask(Document document)
 		{

@@ -1,7 +1,9 @@
 ﻿@using PDF_Acc_Toolset.Pages.Tools;
 @using PDF_Acc_Toolset.Services;
 @using iText.Kernel.Pdf;
+@using Microsoft.Maui.Storage;
 @inject IJSRuntime JSRuntime;
+@inject ConfigService ConfigService;
 
 @page "/"
 
@@ -62,6 +64,8 @@
     }
 </div>
 
+<button @onclick=temp>TO DO </button>
+
 @code {
     public enum Tools {ListGen, TableGen, Validation, None};
     public Tools activeTool = Tools.None;
@@ -71,6 +75,9 @@
 
     public PdfImportConfig import;
     public PdfReader reader;
+
+    [Inject]
+    private ConfigService configService { get; set; }
 
     public void OnToolSelected(int tool)
     {
@@ -153,6 +160,21 @@
         this.import.Standard = import.Standard;
 
         // Show export page
+        // Create new options
+        PickOptions uploadOptions = new();
+        // Set title
+        uploadOptions.PickerTitle = "Upload a PDF";
+        // Limit to PDF only
+        FilePickerFileType pdfType = new FilePickerFileType(
+            new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                { DevicePlatform.WinUI, new[] {".pdf"}},
+                { DevicePlatform.Unknown, new[] {".pdf"}},
+                }
+        );
+        // Save filter
+        uploadOptions.FileTypes = pdfType;
+        // Wait for upload
 
     }
 
@@ -163,5 +185,10 @@
     private ImportSettings.ImportSelection ConvertMetadataToImportDefault()
     {
         return new ImportSettings.ImportSelection(this.import.Title, this.import.Lang, this.import.Standard);
+    }
+
+    public async void temp()
+    {
+        await this.configService.EnsureCreation(ConfigEntry.EXPORT_DIRECTORY);
     }
 }

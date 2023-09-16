@@ -23,9 +23,15 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		builder.Services.AddSingleton<WeatherForecastService>();
+
+#if WINDOWS
+        builder.Services.AddTransient<IFolderPicker, Platforms.Windows.FolderPicker>();
+#endif
+
+        builder.Services.AddSingleton<WeatherForecastService>();
 		builder.Services.AddSingleton<PdfManager>();
 		builder.Services.AddSingleton<TaskManager>();
+		builder.Services.AddSingleton<ConfigService>();
 
 		return builder.Build();
 	}

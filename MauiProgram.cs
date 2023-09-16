@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using PDF_Acc_Toolset.Data;
 using PDF_Acc_Toolset.Services;
+using CommunityToolkit.Maui.Core;
 
 namespace PDF_Acc_Toolset;
 
@@ -11,6 +12,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseMauiCommunityToolkitCore()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -21,11 +23,6 @@ public static class MauiProgram
 #if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
-#endif
-
-
-#if WINDOWS
-        builder.Services.AddTransient<IFolderPicker, Platforms.Windows.FolderPicker>();
 #endif
 
         builder.Services.AddSingleton<WeatherForecastService>();

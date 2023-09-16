@@ -1,18 +1,14 @@
-﻿
+﻿using CommunityToolkit.Maui.Storage;
+
 namespace PDF_Acc_Toolset.Services
 {
     internal class ConfigService
     {
-        private readonly IFolderPicker _folderPicker;
+        public ConfigService() {}
 
-        public ConfigService(IFolderPicker folderPicker)
+        public string GetEntry(ConfigEntry key, string defaultValue)
         {
-            _folderPicker = folderPicker;
-        }
-
-        public string GetEntry(string key, string defaultValue)
-        {
-            return Preferences.Get(key, defaultValue);
+            return Preferences.Get(key.ToString(), defaultValue);
         }
 
         /// <summary>
@@ -22,9 +18,15 @@ namespace PDF_Acc_Toolset.Services
         /// <returns></returns>
         public async Task<bool> EnsureCreation(ConfigEntry key)
         {
+            // Check if the key exists
+            if (Preferences.ContainsKey(key.ToString())) {
+                return true;
+            }
+
+            // It doesn't exist, try to create it
             return key switch
             {
-                ConfigEntry.EXPORT_DIRECTORY => await SetExportDir(),
+                ConfigEntry.ExportDir => await SetExportDir(),
                 _ => false,
             };
         }
@@ -57,18 +59,26 @@ namespace PDF_Acc_Toolset.Services
         {
             try
             {
-                string dir = await _folderPicker.PickFolder();
-                if (dir != null)
-                {
+                // Request a folder
+                FolderPickerResult result = await FolderPicker.Default.PickAsync(new CancellationToken());
 
+                if (result.IsSuccessful)
+                {
+                    // Save the folder path
+                    Preferences.Set(ConfigEntry.ExportDir.ToString(), result.Folder.Path);
                     return true;
                 } else
                 {
-                    return false;
+                    // Create the export folder in the app data directory
+                    string defaultDir = Path.Combine(FileSystem.Current.AppDataDirectory, "Exports");
+                    Directory.CreateDirectory(defaultDir);
+                    // Save the folder path
+                    Preferences.Set(ConfigEntry.ExportDir.ToString(), defaultDir);
+                    return true;
                 }
             } catch (Exception)
             {
-                throw;
+                // A bunch of stuff failed, probably in read only mode or somethin -_-
                 return false;
             }
         }
@@ -79,15 +89,6 @@ namespace PDF_Acc_Toolset.Services
         /// <summary>
         /// The directory which will contain exported files.
         /// </summary>
-        EXPORT_DIRECTORY
-    }
-
-
-    /// <summary>
-    /// To do - move this to own file
-    /// </summary>
-    internal interface IFolderPicker
-    {
-        Task<string> PickFolder();
+        ExportDir
     }
 }

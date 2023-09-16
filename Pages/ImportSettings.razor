@@ -4,6 +4,12 @@
 	@onsubmit="() => Submit(true)">
 	<div class="flex flex-col grow">
 		<div class="m-2 flex flex-row justify-between">
+			<label>File Name</label>
+			<input @bind="Filename" type="text" id="importFilename"
+				   class="bg-gray-800 rounded-md p-2 text-green-400 justify-self-end grow ml-2" />
+		</div>
+
+		<div class="m-2 flex flex-row justify-between">
 			<label>Title</label>
 			<input @bind="Title" type="text" id="importTitle"
 				class="bg-gray-800 rounded-md p-2 text-green-400 justify-self-end grow ml-2" />
@@ -53,13 +59,14 @@
 	public string Title { get; set; }
 	public string Lang { get; set; }
 	public string Standard { get; set; }
+	public string Filename { get; set; }
 
 	public void Submit(bool useChanges = false)
 	{
 		if (useChanges)
 		{
 			// Use the changed values
-			this.OnImportConfirmed.InvokeAsync(new ImportSelection(Title, Lang, Standard));
+			this.OnImportConfirmed.InvokeAsync(new ImportSelection(Title, Lang, Standard, Filename));
 		} else
 		{
 			// Use the initial values
@@ -70,9 +77,10 @@
 	protected override void OnInitialized()
 	{
 		// Set the values in the form from the imported PDF
-		this.Title = initialConfig.Title;
-		this.Lang = initialConfig.Lang;
-		this.Standard = initialConfig.Standard;
+		this.Filename = initialConfig.Filename;
+		this.Title = initialConfig.Title ?? "";
+		this.Lang = initialConfig.Lang ?? "En-US";
+		this.Standard = initialConfig.Standard ?? "None";
 
 		// Continue with blazor stuff
 		base.OnInitialized();
@@ -83,12 +91,14 @@
 		public string Title;
 		public string Lang;
 		public string Standard;
+		public string Filename;
 
-		public ImportSelection(string Title, string Lang, string Standard)
+		public ImportSelection(string Title, string Lang, string Standard, string Filename)
 		{
 			this.Title = Title;
 			this.Lang = Lang;
 			this.Standard = Standard;
-		}	
+			this.Filename = Filename;
+		}
 	}
 }

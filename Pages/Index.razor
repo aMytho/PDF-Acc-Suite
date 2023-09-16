@@ -75,6 +75,7 @@
 
     public PdfImportConfig import;
     public PdfReader reader;
+    public string fullPath;
 
     [Inject]
     private ConfigService configService { get; set; }
@@ -136,6 +137,9 @@
 
         // Request metadata for the PDF. We pass this to the import component later
         this.import = PdfManager.GetMetadata(this.reader);
+        // Add the filename
+        this.import.Filename = result.FileName;
+        this.fullPath = result.FullPath;
 
         // Request import settings from user
         this.showImport = true;
@@ -144,38 +148,36 @@
         _ = JSRuntime.InvokeVoidAsync("console.log", "Done with PDF Upload");
     }
 
-    public void OnImportSet(ImportSettings.ImportSelection import)
+    public async void OnImportSet(ImportSettings.ImportSelection import)
     {
         _ = JSRuntime.InvokeVoidAsync("console.log", "Import Complete!");
 
         // Move to the next section
         this.showImport = false;
 
-        // Create PDF import config based on the user import settings
-        this.import = new PdfImportConfig();
-
         // based on the user settings, set the metadata for the output file
         this.import.Title = import.Title;
         this.import.Lang = import.Lang;
         this.import.Standard = import.Standard;
+        this.import.Filename = import.Filename;
 
-        // Show export page
-        // Create new options
-        PickOptions uploadOptions = new();
-        // Set title
-        uploadOptions.PickerTitle = "Upload a PDF";
-        // Limit to PDF only
-        FilePickerFileType pdfType = new FilePickerFileType(
-            new Dictionary<DevicePlatform, IEnumerable<string>>
-                {
-                { DevicePlatform.WinUI, new[] {".pdf"}},
-                { DevicePlatform.Unknown, new[] {".pdf"}},
-                }
-        );
-        // Save filter
-        uploadOptions.FileTypes = pdfType;
-        // Wait for upload
+        // We need to set the export path. Check if one exists
+        bool exportDirExists = await this.configService.EnsureCreation(ConfigEntry.ExportDir);
+        if (!exportDirExists)
+        {
+            // To-do: Force creation
+            _ = JSRuntime.InvokeVoidAsync("alert", "Error: You must select an output directory that you have write access to.");
+            return;
+        }
+        // Get the export dir
+        string exportDir = this.configService.GetEntry(ConfigEntry.ExportDir, null);
 
+        // Set output
+        PdfManager.SetOutputFile(exportDir + "/" + this.import.Filename, this.fullPath, this.import);
+        // Show toolox
+        this.showToolbox = true;
+
+        _ = JSRuntime.InvokeVoidAsync("console.log", "Export Complete!");
     }
 
     /// <summary>
@@ -184,11 +186,11 @@
     /// <returns></returns>
     private ImportSettings.ImportSelection ConvertMetadataToImportDefault()
     {
-        return new ImportSettings.ImportSelection(this.import.Title, this.import.Lang, this.import.Standard);
+        return new ImportSettings.ImportSelection(this.import.Title, this.import.Lang, this.import.Standard, this.import.Filename);
     }
 
     public async void temp()
     {
-        await this.configService.EnsureCreation(ConfigEntry.EXPORT_DIRECTORY);
+        //await this.configService.EnsureCreation(ConfigEntry.EXPORT_DIRECTORY);
     }
 }

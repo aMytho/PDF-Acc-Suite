@@ -1,6 +1,6 @@
 ﻿using iText.Kernel.Pdf;
 using iText.Layout;
-using iText.Layout.Element;
+using iText.Kernel.Colors;
 using PDF_Acc_Toolset.Services.Util;
 using System.Diagnostics;
 
@@ -12,6 +12,8 @@ namespace PDF_Acc_Toolset.Services
 		/// Store the active PDF
 		/// </summary>
 		private static Document document;
+
+		public static MemoryStream outFile;
 
 		private static string exportPath;
 
@@ -58,15 +60,16 @@ namespace PDF_Acc_Toolset.Services
 
 		public static void SetOutputFile(string path, string inputPath, PdfImportConfig conf)
 		{
-			// Adjust metadata (if needed)
-			if (conf.Standard != null && conf.Standard.Equals("UA"))
+            outFile = new();
+            // Adjust metadata (if needed)
+            if (conf.Standard != null && conf.Standard.Equals("UA"))
 			{
 				// TO-DO: add the other standards
 				conf.WriterConfig.AddUAXmpMetadata();
 			}
 
 			// Load the file from disk, apply config
-			PdfWriter writer = new(path, conf.WriterConfig);
+			PdfWriter writer = new(outFile, conf.WriterConfig);
 			PdfDocument pdf = new(new PdfReader(inputPath), writer);
 			
 			// Store the document in the manager
@@ -114,7 +117,40 @@ namespace PDF_Acc_Toolset.Services
 			}
 			catch (Exception) {}
 		}
-	}
+
+		public static void Temp(Stream stream) {
+			// Load the file from disk, apply config
+			PdfWriter writer = new("C:\\Users\\JMyth\\Documents\\Acc Toolset\\Exports\\123.pdf", new WriterProperties());
+			PdfDocument pdf = new(new PdfReader(stream), writer);
+			
+			// Store the document in the manager
+			document = new Document(pdf);
+			// to do -- try writing to a stream or in memory, then return a route for the file
+		}
+
+		public static void Temp2(Stream stream)
+		{
+			outFile = new();
+
+            // Load the file from disk, apply config
+            PdfWriter writer = new(outFile, new WriterProperties());
+            PdfDocument pdf = new(new PdfReader(stream), writer);
+
+            // Store the document in the manager
+            document = new Document(pdf);
+
+			document.SetOpacity((float?)0.5);
+			document.SetBold();
+			document.SetUnderline();
+			document.Close();
+            // to do -- try writing to a stream or in memory, then return a route for the file
+        }
+
+		public MemoryStream GetFile()
+		{
+			return outFile;
+		}
+    }
 
 	public struct ImportOperation<T>
 	{

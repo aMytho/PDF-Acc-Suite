@@ -70,7 +70,7 @@ namespace PDF_Acc_Toolset.Services
                 } else
                 {
                     // Create the export folder in the app data directory
-                    string defaultDir = Path.Combine(FileSystem.Current.AppDataDirectory, "Exports");
+                    string defaultDir = Path.Combine(FileSystem.AppDataDirectory, "Exports");
                     Directory.CreateDirectory(defaultDir);
                     // Save the folder path
                     Preferences.Set(ConfigEntry.ExportDir.ToString(), defaultDir);
@@ -81,6 +81,11 @@ namespace PDF_Acc_Toolset.Services
                 // A bunch of stuff failed, probably in read only mode or somethin -_-
                 return false;
             }
+        }
+
+        public void ResetAll()
+        {
+            Preferences.Clear();
         }
     }
 
